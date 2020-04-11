@@ -21,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->group(function () {
     Route::get('category', 'Api\General\GeneralController@category');
 });
-Route::post('register', 'Api\General\GeneralController@register');
+//Route::post('register', 'Api\General\GeneralController@register');
 
