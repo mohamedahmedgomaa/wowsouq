@@ -14,12 +14,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+Route::group(['namespace' => 'Api'], function () {
 
-Route::middleware('auth:api')->group(function () {
-    Route::get('category', 'Api\General\GeneralController@category');
-});
-//Route::post('register', 'Api\General\GeneralController@register');
 
+    Route::group(['namespace' => 'Client', 'prefix' => 'client'], function () {
+
+        Route::post('register', 'AuthController@register');
+        Route::post('login', 'AuthController@login');
+
+        Route::middleware('auth:api')->group(function () {
+
+        });
+    });
+
+    Route::group(['namespace' => 'General', 'prefix' => 'general'], function () {
+
+            Route::get('category', 'GeneralController@category');
+
+    });
+
+    Route::group(['namespace' => 'Seller', 'prefix' => 'seller'], function () {
+
+        Route::post('login', 'AuthController@login');
+        Route::post('register', 'AuthController@register');
+
+        Route::middleware('auth:seller')->group(function () {
+
+        });
+    });
+
+});

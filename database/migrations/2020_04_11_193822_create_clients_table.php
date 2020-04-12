@@ -9,20 +9,20 @@ class CreateClientsTable extends Migration {
 	{
 		Schema::create('clients', function(Blueprint $table) {
 			$table->increments('id');
-			$table->timestamps();
-			$table->softDeletes();
 			$table->string('name');
 			$table->string('email');
 			$table->string('phone');
 			$table->string('image');
 			$table->string('password');
 			$table->integer('age');
-			$table->enum('type', array('male', 'female'));
+			$table->enum('gender', array('male', 'female'));
 			$table->string('address');
-			$table->decimal('longitude', 10,2);
-			$table->decimal('latitude', 10,2);
+			$table->decimal('longitude', 10,8);
+			$table->decimal('latitude', 10,8);
 			$table->enum('status', array('0', '1'))->nullable();
 			$table->string('pin_code')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

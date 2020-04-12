@@ -11,10 +11,25 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::group(['prefix' => 'admin'], function () {
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Auth::routes(['register' => false]);
+
+    Route::group(['middleware' => ['auth']], function () {
+
+        Route::group(['namespace' => 'Admin'], function () {
+
+            Route::get('/', 'GeneralController@dashboard')->name('dashboard');
+
+            Route::resource('admin', 'AdminController');
+            Route::delete('admin/destroy/all', 'AdminController@multi_delete');
+        });
+    });
+});

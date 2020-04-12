@@ -2,11 +2,14 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
-class Client extends Model 
+class Client extends Authenticatable
 {
+    use HasApiTokens;
 
     protected $table = 'clients';
     public $timestamps = true;
@@ -14,7 +17,7 @@ class Client extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('name', 'email', 'phone', 'image', 'password', 'age', 'type', 'address', 'longitude', 'latitude', 'status', 'pin_code');
+    protected $fillable = array('name', 'email', 'phone', 'image', 'password', 'age', 'gender', 'address', 'longitude', 'latitude', 'status', 'pin_code');
 
     public function comments()
     {
@@ -31,9 +34,6 @@ class Client extends Model
         return $this->morphMany('App\Model\Notification', 'notifiiable');
     }
 
-    public function comments()
-    {
-        return $this->hasMany('App\Model\Comment');
-    }
+
 
 }
