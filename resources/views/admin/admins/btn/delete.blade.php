@@ -16,7 +16,7 @@
         <h4>{{ trans('admin.delete_this',['name'=>$name]) }}</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info" data-dismiss="modal">{{ trans('admin.close') }}</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">{{ trans('admin.no') }}</button>
       	{!! Form::submit(trans('admin.yes'), ['class'=>'btn btn-danger']) !!}
       </div>
       {!! Form::close() !!}

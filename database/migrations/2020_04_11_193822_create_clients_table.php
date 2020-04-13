@@ -16,8 +16,9 @@ class CreateClientsTable extends Migration {
 			$table->string('password');
 			$table->integer('age');
 			$table->enum('gender', array('male', 'female'));
-			$table->string('address');
-			$table->decimal('longitude', 10,8);
+            $table->decimal('wallet', 10,2);
+            $table->string('address');
+            $table->decimal('longitude', 10,8);
 			$table->decimal('latitude', 10,8);
 			$table->enum('status', array('0', '1'))->nullable();
 			$table->string('pin_code')->nullable();

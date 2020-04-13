@@ -48,6 +48,11 @@ class CreateForeignKeys extends Migration {
 						->onDelete('set null')
 						->onUpdate('set null');
 		});
+        Schema::table('files', function(Blueprint $table) {
+            $table->foreign('seller_id')->references('id')->on('sellers')
+                ->onDelete('set null')
+                ->onUpdate('set null');
+        });
 		Schema::table('lang_products', function(Blueprint $table) {
 			$table->foreign('product_id')->references('id')->on('products')
 						->onDelete('cascade')
@@ -85,6 +90,9 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('files', function(Blueprint $table) {
 			$table->dropForeign('files_product_id_foreign');
+		});
+		Schema::table('files', function(Blueprint $table) {
+			$table->dropForeign('files_seller_id_foreign');
 		});
 		Schema::table('lang_products', function(Blueprint $table) {
 			$table->dropForeign('lang_products_product_id_foreign');

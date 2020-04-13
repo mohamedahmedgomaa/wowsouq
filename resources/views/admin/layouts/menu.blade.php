@@ -11,7 +11,7 @@
         </a>
         <ul class="treeview-menu">
             <li><a href="{{url('/admin')}}"><i class="fa fa-circle-o"></i>{{trans('admin.dashboard')}} </a></li>
-{{--            <li><a href="{{url('admin/settings')}}"><i class="fa fa-circle-o"></i> {{trans('admin.settings')}}</a></li>--}}
+            <li><a href="{{url('admin/settings')}}"><i class="fa fa-circle-o"></i> {{trans('admin.settings')}}</a></li>
         </ul>
     </li>
 {{--    @endif--}}

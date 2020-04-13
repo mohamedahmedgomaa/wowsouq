@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="{{ asset('css/rtl/bootstrap-rtl.min.css')}}">
         <link rel="stylesheet" href="{{ asset('css/rtl/rtl.css')}}">
 @endif
-{{--    <link href="https://fonts.googleapis.com/css?family=Cairo:300,400&amp;subset=arabic,latin-ext" rel="stylesheet">--}}
+{{--        <link href="https://fonts.googleapis.com/css?family=Cairo:300,400&amp;subset=arabic,latin-ext" rel="stylesheet">--}}
 <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
 
@@ -388,8 +388,8 @@
 <!-- DataTables -->
 <script src="{{ url('design/adminlte') }}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="{{ url('design/adminlte') }}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-{{--<script src="{{ url('design/adminlte') }}/bower_components/datatables.net-bs/js/dataTables.buttons.min.js"></script>--}}
-
+<script src="{{ url('design/adminlte') }}/bower_components/datatables.net-bs/js/dataTables.buttons.min.js"></script>
+<script src="{{ url('') }}/vendor/datatables/buttons.server-side.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
 {{--<script src="{{ asset('') }}js/dataTables.buttons.min.js"></script>--}}
@@ -417,7 +417,7 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
 {{--<script src="{{ asset('js/helper.js') }}"></script>--}}
-
+<script src="{{ url('/design/adminlte/dist/js/myfunctions.js') }}"></script>
 @stack('scripts')
 @stack('js')
 

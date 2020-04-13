@@ -24,8 +24,13 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
+        Route::post('reset-password', 'AuthController@resetPassword');
+        Route::post('new-password', 'AuthController@newPassword');
 
         Route::middleware('auth:api')->group(function () {
+
+            Route::get('wallet', 'MainController@wallet');
+            Route::post('wallet/create', 'MainController@walletCreate');
 
         });
     });
@@ -40,8 +45,13 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::post('login', 'AuthController@login');
         Route::post('register', 'AuthController@register');
+        Route::post('reset-password', 'AuthController@resetPassword');
+        Route::post('new-password', 'AuthController@newPassword');
 
         Route::middleware('auth:seller')->group(function () {
+
+            Route::get('wallet', 'MainController@wallet');
+            Route::post('wallet/create', 'MainController@walletCreate');
 
         });
     });

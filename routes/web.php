@@ -30,6 +30,15 @@ Route::group(['prefix' => 'admin'], function () {
 
             Route::resource('admin', 'AdminController');
             Route::delete('admin/destroy/all', 'AdminController@multi_delete');
+
+            Route::get('/settings', 'SettingController@index')->name('settings');
+            Route::post('/settings/update', 'SettingController@update')->name('settings.update');
         });
+    });
+
+    Route::get('lang/{lang}', function($lang) {
+        session()->has('lang') ? session()->forget('lang') : '';
+        $lang == 'ar' ? session()->put('lang', 'ar') : session()->put('lang', 'en');
+        return back();
     });
 });

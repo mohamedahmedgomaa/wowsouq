@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api\Seller;
 
+use App\Mail\ResetPasswordClient;
+use App\Mail\ResetPasswordSeller;
+use App\Model\Client;
 use App\Model\Seller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -76,4 +80,63 @@ class AuthController extends Controller
             'seller' => $seller
         ]);
     }
+
+
+    public function resetPassword(Request $request) {
+        $validator = validator()->make($request->all(), [
+            'email' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return responseJson(400,$validator->errors()->first(), $validator->errors());
+        }
+        $user = Seller::where('email',$request->email)->first();
+        if ($user) {
+            $code = rand(1111, 9999);
+            $update = $user->update(['pin_code' => $code]);
+            if ($update) {
+
+                Mail::to($request->email)
+                    ->bcc('mido.15897@gmail.com')
+                    ->send(new ResetPasswordSeller($code));
+                return responseJson(200,trans('api.Please check your email'), ['pin_code' => $code]);
+            } else {
+                return responseJson(400, trans('api.an error occurred . Try again'));
+            }
+        } else {
+            return responseJson(400,trans('api.The data is incorrect'));
+        }
+
+    }
+
+    public function newPassword(Request $request) {
+
+        $validator = validator()->make($request->all(), [
+            'pin_code' => 'required',
+            'email' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return responseJson(400,$validator->errors()->first(), $validator->errors());
+        }
+
+        $user = Seller::where('pin_code',$request->pin_code)->where('pin_code', '!=' , 0)
+            ->where('email',$request->email)->first();
+
+        if ($user) {
+            $user->password = bcrypt($request->password);
+            $user->pin_code = null;
+
+            if ($user->save())
+            {
+                return responseJson(200, trans('api.Password changed successfully'), $user);
+            } else {
+                return responseJson(400, trans('api.an error occurred . Try again'));
+            }
+        } else {
+            return responseJson(400, trans('api.This code is incorrect'));
+        }
+    }
+
+
 }

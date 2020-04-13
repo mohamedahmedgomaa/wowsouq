@@ -14,12 +14,12 @@ class GeneralController extends Controller
 {
     public function category()
     {
-        $category = Category::all();
-        if ($category == null) {
-            return responseJson(1, 'success', $category);
-        } else {
-            return responseJson(0, 'success');
-        }
+//        $category = Category::all();
+//        if ($category == null) {
+//            return responseJson(1, 'success', $category);
+//        } else {
+//            return responseJson(0, 'success');
+//        }
     }
 
 }

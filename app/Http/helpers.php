@@ -12,6 +12,12 @@ function responseJson($status, $message, $data=null)
     return response()->json($response);
 }
 
+if (!function_exists('up')) {
+    function up() {
+        return new \App\Http\Controllers\Upload;
+    }
+}
+
 function settings()
 {
     $settings = Setting::find(1);
@@ -160,3 +166,16 @@ if (!function_exists('datatable_lang')) {
         ];
     }
 }
+
+///////// validate Helper Function /////////
+if (!function_exists('v_image')) {
+    function v_image($ext=null)
+    {
+        if ($ext === null) {
+            return 'image|mimes:jpg,jpeg,png,gif,bmp';
+        } else {
+            return 'image|mimes:'.$ext;
+        }
+    }
+}
+///////// validate Helper Function /////////
