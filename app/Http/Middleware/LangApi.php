@@ -3,9 +3,19 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Foundation\Application;
 
 class LangApi
 {
+    /**
+     * Localization constructor.
+     *
+     * @param \Illuminate\Foundation\Application $app
+     */
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
     /**
      * Handle an incoming request.
      *
@@ -15,6 +25,32 @@ class LangApi
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        // read the language from the request header
+        $locale = $request->header('lang');
+
+        // if the header is missed
+        if(!$locale){
+            // take the default local language
+            $locale = $this->app->config->get('app.locale');
+        }
+
+        $lang = $this->app->config->get('app.supported_languages');
+        // check the languages defined is supported
+        if (is_array($lang) && !array_key_exists($locale, $lang)) {
+            // respond with error
+            return abort(403, 'Language not supported.');
+        }
+
+        // set the local language
+        $this->app->setLocale($locale);
+
+        // get the response after the request is done
+        $response = $next($request);
+
+        // set Content Languages header in the response
+        $response->headers->set('lang', $locale);
+
+        // return the response
+        return $response;
     }
 }

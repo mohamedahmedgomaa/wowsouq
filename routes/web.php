@@ -31,6 +31,9 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('admin', 'AdminController');
             Route::delete('admin/destroy/all', 'AdminController@multi_delete');
 
+            Route::resource('client', 'ClientController');
+            Route::delete('client/destroy/all', 'ClientController@multi_delete');
+
             Route::get('/settings', 'SettingController@index')->name('settings');
             Route::post('/settings/update', 'SettingController@update')->name('settings.update');
         });

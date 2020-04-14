@@ -22,6 +22,8 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::group(['namespace' => 'Client', 'prefix' => 'client'], function () {
 
+        // Auth Controller
+
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
         Route::post('reset-password', 'AuthController@resetPassword');
@@ -29,19 +31,35 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::middleware('auth:api')->group(function () {
 
+            // Main Controller
+
             Route::get('wallet', 'MainController@wallet');
             Route::post('wallet/create', 'MainController@walletCreate');
+            Route::post('password/update', 'MainController@passwordUpdate');
+            Route::post('profile/update', 'MainController@profileUpdate');
+            Route::post('like', 'MainController@like');
+
+            // Order Controller
+
+            Route::get('new-order', 'OrderController@newOrder');
+            Route::get('current-order', 'OrderController@CurrentOrder');
+            Route::get('old-order', 'OrderController@OldOrder');
 
         });
     });
 
     Route::group(['namespace' => 'General', 'prefix' => 'general'], function () {
 
-            Route::get('category', 'GeneralController@category');
+        // General Controller
+
+        Route::get('category', 'GeneralController@category');
+        Route::get('settings', 'GeneralController@settings');
 
     });
 
     Route::group(['namespace' => 'Seller', 'prefix' => 'seller'], function () {
+
+        // Auth Controller
 
         Route::post('login', 'AuthController@login');
         Route::post('register', 'AuthController@register');
@@ -50,8 +68,19 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::middleware('auth:seller')->group(function () {
 
+            // Main Controller
+
             Route::get('wallet', 'MainController@wallet');
             Route::post('wallet/create', 'MainController@walletCreate');
+            Route::post('password/update', 'MainController@passwordUpdate');
+            Route::post('profile/update', 'MainController@profileUpdate');
+
+            // Order Controller
+
+            Route::get('new-order', 'OrderController@newOrder');
+            Route::get('current-order', 'OrderController@CurrentOrder');
+            Route::get('old-order', 'OrderController@OldOrder');
+
 
         });
     });

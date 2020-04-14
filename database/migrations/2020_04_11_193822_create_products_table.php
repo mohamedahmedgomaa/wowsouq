@@ -9,13 +9,14 @@ class CreateProductsTable extends Migration {
 	{
 		Schema::create('products', function(Blueprint $table) {
 			$table->increments('id');
-			$table->timestamps();
-			$table->decimal('price');
-			$table->decimal('offer')->default('0');
-			$table->string('image');
-			$table->integer('category_id')->unsigned()->nullable();
-			$table->integer('seller_id')->unsigned()->nullable();
-			$table->softDeletes();
+            $table->decimal('price');
+            $table->decimal('offer')->default('0');
+            $table->string('image');
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('seller_id')->unsigned()->nullable();
+            $table->integer('number_product')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 		});
 	}
 

@@ -2,14 +2,11 @@
 
 namespace App\DataTables;
 
-use App\User;
-use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\Html\Column;
+use App\Model\Client;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Editor\Fields;
-use Yajra\DataTables\Html\Editor\Editor;
 
-class AdminDatatable extends DataTable
+class ClientDatatable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,10 +18,9 @@ class AdminDatatable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'admindatatable.action')
-            ->addColumn('checkbox', 'admin.admins.btn.checkbox')
-            ->addColumn('edit', 'admin.admins.btn.edit')
-            ->addColumn('delete', 'admin.admins.btn.delete')
+            ->addColumn('checkbox', 'admin.clients.btn.checkbox')
+            ->addColumn('edit', 'admin.clients.btn.edit')
+            ->addColumn('delete', 'admin.clients.btn.delete')
             ->rawColumns([
                 'edit',
                 'delete',
@@ -40,7 +36,7 @@ class AdminDatatable extends DataTable
      */
     public function query()
     {
-        return User::query();
+        return Client::query();
     }
 
     /**
@@ -53,8 +49,6 @@ class AdminDatatable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            // ->addAction(['width' => '80px'])
-            // ->parameters($this->getBuilderParameters());
             ->parameters([
                 'dom'        => 'Blfrtip',
                 'lengthMenu' => [[10,25,50,100], [10,25,50, trans('admin.all_record')]],
@@ -116,11 +110,15 @@ class AdminDatatable extends DataTable
             ],[
                 'name'  => 'name',
                 'data'  => 'name',
-                'title' => trans('admin.admin_name'),
+                'title' => trans('admin.name'),
             ],[
                 'name'  => 'email',
                 'data'  => 'email',
-                'title' => trans('admin.admin_email'),
+                'title' => trans('admin.email'),
+            ],[
+                'name'  => 'phone',
+                'data'  => 'phone',
+                'title' => trans('admin.phone'),
             ],[
                 'name'  => 'created_at',
                 'data'  => 'created_at',

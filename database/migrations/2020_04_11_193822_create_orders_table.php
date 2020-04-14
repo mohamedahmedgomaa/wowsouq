@@ -11,7 +11,7 @@ class CreateOrdersTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->longText('note');
-			$table->enum('state', array(''));
+			$table->enum('status', array('pending','accepted','rejected','delivered','declined'));
 			$table->integer('seller_id')->unsigned()->nullable();
 			$table->integer('client_id')->unsigned()->nullable();
 			$table->decimal('price');

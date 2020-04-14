@@ -15,7 +15,7 @@ class CreateSellersTable extends Migration {
             $table->string('password');
             $table->string('phone');
             $table->decimal('delivery');
-            $table->decimal('wallet', 10,2);
+            $table->decimal('wallet', 10,2)->nullable();
             $table->string('address')->nullable();
             $table->decimal('longitude', 10,8)->nullable();
             $table->decimal('latitude', 10,8)->nullable();

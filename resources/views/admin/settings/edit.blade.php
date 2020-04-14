@@ -43,7 +43,8 @@
                             <div class="form-group">
                                 <label for="image">{{trans('admin.image')}}</label>
                                 <input type="file" class="form-control-file" name="image">
-                                <img src="{{Storage::url($settings->image)}}" alt="000000" class="img-thumbnail" width="50px" height="50px">
+                                <img src="{{Storage::url($settings->image)}}" alt="000000" class="img-thumbnail"
+                                     width="50px" height="50px">
                             </div>
 
                             <div class="form-group">

@@ -5,7 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model 
+class Product extends Model
 {
 
     protected $table = 'products';
@@ -14,7 +14,7 @@ class Product extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('price', 'offer', 'image', 'category_id', 'seller_id');
+    protected $fillable = array('price', 'offer', 'image', 'category_id', 'seller_id', 'number_product');
 
     public function files()
     {

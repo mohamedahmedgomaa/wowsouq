@@ -20,6 +20,10 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
+        ],[
+            'email.required' => trans('validation.emailIsRequired'),
+            'email.email' => trans('validation.emailIsEmail'),
+            'password.required' => trans('validation.passwordIsRequired'),
         ]);
 
         if ($validator->fails()) {
@@ -51,7 +55,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:clients',
             'password' => 'required|confirmed',
             'phone' => 'required',
-            'image' => v_image(),
+            'image' => 'required|'.v_image(),
             'age' => 'required',
             'gender' => 'required|in:male,female',
             'address' => 'required',
@@ -59,11 +63,24 @@ class AuthController extends Controller
             'latitude' => 'required',
             'status' => 'required|in:0,1',
         ], [
-            'name.required' => trans('api.nameIsRequired'),
-            'email.required' => trans('api.emailIsRequired'),
-            'email.unique' => trans('api.emailIsUnique'),
-            'password.required' => trans('api.passwordIsRequired'),
+            'name.required' => trans('validation.nameIsRequired'),
+            'email.required' => trans('validation.emailIsRequired'),
+            'email.email' => trans('validation.emailIsEmail'),
+            'email.unique' => trans('validation.emailIsUnique'),
+            'password.required' => trans('validation.passwordIsRequired'),
             'password.confirmed' => trans('api.passwordIsConfirmation'),
+            'phone.required' => trans('validation.phoneIsRequired'),
+            'age.required' => trans('validation.ageIsRequired'),
+            'gender.required' => trans('validation.genderIsRequired'),
+            'image.required' => trans('validation.imageIsRequired'),
+            'image.image' => trans('validation.imageIsImage'),
+            'image.mimes' => trans('validation.imageIsMimes'),
+            'address.required' => trans('validation.addressIsRequired'),
+            'longitude.required' => trans('validation.longitudeIsRequired'),
+            'latitude.required' => trans('validation.latitudeIsRequired'),
+            'status.required' => trans('validation.statusIsRequired'),
+            'status.in' => trans('validation.statusIsIn'),
+            'gender.in' => trans('validation.genderIsIn'),
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +103,7 @@ class AuthController extends Controller
         $success['token'] = $client->createToken('Token Name')->accessToken;
         $success['name'] = $client->name;
 
-        return responseJson(200, 'success', [
+        return responseJson(200, trans('api.createMessageSuccess'), [
             'data' => $success,
             'client' => $client
         ]);
@@ -95,7 +112,10 @@ class AuthController extends Controller
     public function resetPassword(Request $request)
     {
         $validator = validator()->make($request->all(), [
-            'email' => 'required',
+            'email' => 'required|email',
+        ],[
+            'email.required' => trans('validation.emailIsRequired'),
+            'email.email' => trans('validation.emailIsEmail'),
         ]);
         if ($validator->fails()) {
             return responseJson(400, $validator->errors()->first(), $validator->errors());
@@ -126,6 +146,11 @@ class AuthController extends Controller
             'pin_code' => 'required',
             'email' => 'required',
             'password' => 'required|confirmed',
+        ],[
+            'pin_code.required' => trans('validation.pinCodeIsRequired'),
+            'email.required' => trans('validation.emailIsRequired'),
+            'password.required' => trans('validation.passwordIsRequired'),
+            'password.confirmed' => trans('api.passwordIsConfirmation'),
         ]);
 
         if ($validator->fails()) {
