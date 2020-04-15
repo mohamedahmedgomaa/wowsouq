@@ -34,4 +34,9 @@ class Seller extends Authenticatable
         return $this->morphMany('App\Model\Notification', 'notifiiable');
     }
 
+    public function tokens()
+    {
+        return $this->morphMany('App\Model\Token', 'tokenable');
+    }
+
 }

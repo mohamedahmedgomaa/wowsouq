@@ -39,6 +39,9 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet"/>
 
     <![endif]-->
 {{--    <script src="sweetalert2.min.js"></script>--}}
@@ -53,21 +56,24 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="{{ asset('') }}index2.html" class="logo">
+        <a href="{{url('admin')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini">Sofra</span>
+            <span class="logo-mini">Wow Souq</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">Sofra</span>
+            <span class="logo-lg">Wow Souq</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
+            @if(direction() == 'ltr')
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
+            @else
+                @endif
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -85,7 +91,7 @@
 
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ asset('') }}adminlte/img/user2-160x160.jpg" class="user-image"
+                            <img src="{{ asset('') }}adminlte/img/icon.png" class="user-image"
                                  alt="User Image">
                             @guest
                             @else
@@ -95,7 +101,7 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ asset('') }}adminlte/img/user2-160x160.jpg" class="img-circle"
+                                <img src="{{ asset('') }}adminlte/img/icon.png" class="img-circle"
                                      alt="User Image">
 
                                 <p>
@@ -136,7 +142,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ asset('') }}adminlte/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="{{ asset('') }}adminlte/img/icon.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     @guest
@@ -424,6 +430,41 @@
 
 @stack('scripts')
 @stack('js')
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+</script>
+
+
+<style>
+    .select2-container--default .select2-selection--single {
+        height: calc(2.5rem + 2px);
+        color: black;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444;
+        line-height: 30px;
+        font-weight: bold;
+    }
+</style>
+@if(direction() == 'ltr')
+@else
+    <style>
+        .select2-container--default .select2-results > .select2-results__options {
+            text-align: right;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            float: right;
+        }
+    </style>
+@endif
 
 </body>
 </html>

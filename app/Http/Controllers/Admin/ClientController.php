@@ -42,7 +42,7 @@ class ClientController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:clients',
             'password' => 'required|confirmed|min:6',
             'phone' => 'required',
             'image' => 'required|'.v_image(),
@@ -125,7 +125,7 @@ class ClientController extends Controller
         $records = Client::findOrFail($id);
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:clients,email,' . $id,
             'password' => 'sometimes|nullable|confirmed',
             'phone' => 'required',
             'image' => v_image(),
@@ -157,7 +157,6 @@ class ClientController extends Controller
         ]);
 
 
-
         $records->update($request->except('password', 'image'));
         if (request()->input('password')) {
             $records->update(['password' => bcrypt($request->password)]);
@@ -173,7 +172,6 @@ class ClientController extends Controller
             $records->image = $records['image'];
             $records->save();
         }
-
 
         flash()->success(trans('admin.editMessageSuccess'));
         return redirect(route('client.index'));

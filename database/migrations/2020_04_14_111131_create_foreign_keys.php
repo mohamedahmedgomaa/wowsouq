@@ -63,16 +63,6 @@ class CreateForeignKeys extends Migration {
                 ->onDelete('set null')
                 ->onUpdate('set null');
         });
-		Schema::table('lang_products', function(Blueprint $table) {
-			$table->foreign('product_id')->references('id')->on('products')
-						->onDelete('cascade')
-						->onUpdate('cascade');
-		});
-		Schema::table('category_langs', function(Blueprint $table) {
-			$table->foreign('category_id')->references('id')->on('categories')
-						->onDelete('cascade')
-						->onUpdate('cascade');
-		});
 	}
 
 	public function down()
@@ -109,12 +99,6 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('files', function(Blueprint $table) {
 			$table->dropForeign('files_seller_id_foreign');
-		});
-		Schema::table('lang_products', function(Blueprint $table) {
-			$table->dropForeign('lang_products_product_id_foreign');
-		});
-		Schema::table('category_langs', function(Blueprint $table) {
-			$table->dropForeign('category_langs_category_id_foreign');
 		});
 	}
 }

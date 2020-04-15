@@ -4,17 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model 
+class Category extends Model
 {
 
     protected $table = 'categories';
     public $timestamps = true;
-    protected $fillable = array('image');
-
-    public function categoryLangs()
-    {
-        return $this->hasMany('App\Model\CategoryLang');
-    }
+    protected $fillable = array('name_ar', 'description_ar','name_en', 'description_en','image');
 
     public function products()
     {

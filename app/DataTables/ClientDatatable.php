@@ -54,7 +54,7 @@ class ClientDatatable extends DataTable
                 'lengthMenu' => [[10,25,50,100], [10,25,50, trans('admin.all_record')]],
                 'buttons'    =>[
                     [
-                        'text' => '<i class="fa fa-plus"></i> '. trans('admin.create_admin'),
+                        'text' => '<i class="fa fa-plus"></i> '. trans('admin.create_client'),
                         'className' => 'btn btn-info',"action"=>"function(){
                                     window.location.href = '". \URL::current() ."/create';
                                  }"
@@ -120,6 +120,10 @@ class ClientDatatable extends DataTable
                 'data'  => 'phone',
                 'title' => trans('admin.phone'),
             ],[
+                'name'  => 'wallet',
+                'data'  => 'wallet',
+                'title' => trans('admin.wallet'),
+            ],[
                 'name'  => 'created_at',
                 'data'  => 'created_at',
                 'title' => trans('admin.created_at'),
@@ -156,7 +160,7 @@ class ClientDatatable extends DataTable
      */
     protected function filename()
     {
-        return 'Admin_' . date('YmdHis');
+        return 'clients_' . date('YmdHis');
     }
 }
 

@@ -30,12 +30,33 @@ Route::group(['prefix' => 'admin'], function () {
 
             Route::resource('admin', 'AdminController');
             Route::delete('admin/destroy/all', 'AdminController@multi_delete');
+            Route::post('/change-password', 'AdminController@changePassword')->name('changePassword');
+            Route::get('/get-change-password', 'AdminController@getChangePassword')->name('getChangePassword');
 
             Route::resource('client', 'ClientController');
             Route::delete('client/destroy/all', 'ClientController@multi_delete');
 
+            Route::resource('seller', 'SellerController');
+            Route::delete('seller/destroy/all', 'SellerController@multi_delete');
+
+            Route::resource('category', 'CategoryController');
+            Route::delete('category/destroy/all', 'CategoryController@multi_delete');
+
+            Route::resource('product', 'ProductController');
+            Route::delete('product/destroy/all', 'ProductController@multi_delete');
+
+            Route::resource('order', 'OrderController');
+            Route::delete('order/destroy/all', 'OrderController@multi_delete');
+
+            Route::resource('comment', 'CommentController');
+            Route::delete('comment/destroy/all', 'CommentController@multi_delete');
+
+            Route::resource('payment-method', 'PaymentMethodController');
+            Route::delete('payment-method/destroy/all', 'PaymentMethodController@multi_delete');
+
             Route::get('/settings', 'SettingController@index')->name('settings');
             Route::post('/settings/update', 'SettingController@update')->name('settings.update');
+
         });
     });
 
