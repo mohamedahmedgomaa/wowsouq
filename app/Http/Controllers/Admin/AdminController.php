@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DataTables\AdminDatatable;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -29,7 +30,18 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.admins.create');
+
+        if (session('lang') === 'en') {
+            session()->put('lang', 'en');
+            $roles = Role::pluck('name','id')->all();
+        } elseif (session('lang') === 'ar') {
+            session()->put('lang', 'ar');
+            $roles = Role::pluck('name_ar','id')->all();
+        } else {
+            session()->put('lang', 'ar');
+            $roles = Role::pluck('name_ar','id')->all();
+        }
+        return view('admin.admins.create', compact('roles'));
     }
 
     /**
@@ -45,18 +57,17 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $request->user()->id,
             'password' => 'required|confirmed|min:6',
-//            'roles_list' => 'required'
+            'roles' => 'required'
         ], [
             'name.required' => 'Name is Required',
             'email.required' => 'Email is Required',
             'password.required' => 'Password Id is Required',
-//            'roles_list.required' => 'Roles List Id is Required'
+            'roles.required' => 'Roles List Id is Required'
         ]);
 
         $request->merge(['password' => bcrypt($request->password)]);
-//        $user = User::create($request->except('roles_list'));
-//        $user->roles()->attach($request->input('roles_list'));
-        $record = User::create($request->all());
+        $user = User::create($request->except('roles'));
+        $user->syncRoles($request->input('roles'));
         flash()->success("Success");
         return redirect(route('admin.index'));
     }
@@ -82,7 +93,9 @@ class AdminController extends Controller
     {
         //
         $model = User::findOrFail($id);
-        return view('admin.admins.edit', compact('model'));
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $model->roles->pluck('name','name')->all();
+        return view('admin.admins.edit', compact('model', 'roles', 'userRole'));
     }
 
     /**
@@ -100,14 +113,14 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'sometimes|nullable|confirmed',
-//            'roles_list' => 'required'
+            'roles' => 'required'
         ], [
             'name.required' => 'Name is Required',
             'email.required' => 'Email is Required',
             'password.required' => 'Password Id is Required',
-//            'roles_list.required' => 'Roles List Id is Required'
+            'roles.required' => 'Roles List Id is Required'
         ]);
-//        $records->roles()->sync((array) $request->input('roles_list'));
+        $records->roles()->sync((array) $request->input('roles'));
         $records->update($request->except('password'));
         if (request()->input('password')) {
             $records->update(['password' => bcrypt($request->password)]);

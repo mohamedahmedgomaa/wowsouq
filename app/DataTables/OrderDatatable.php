@@ -19,8 +19,10 @@ class OrderDatatable extends DataTable
             ->eloquent($query)
             ->addColumn('checkbox', 'admin.orders.btn.checkbox')
             ->addColumn('delete', 'admin.orders.btn.delete')
+            ->addColumn('show', 'admin.orders.btn.show')
             ->rawColumns([
                 'delete',
+                'show',
                 'checkbox',
             ]);
     }
@@ -93,6 +95,14 @@ class OrderDatatable extends DataTable
                 'name'          => 'checkbox',
                 'data'          => 'checkbox',
                 'title'         => '<input class="check_all" type="checkbox" onclick="check_all()"/>',
+                'exportable'    => false,
+                'printable'     => false,
+                'orderable'     => false,
+                'searchable'    => false,
+            ],[
+                'name'          => 'show',
+                'data'          => 'show',
+                'title'         => trans('admin.showOrder'),
                 'exportable'    => false,
                 'printable'     => false,
                 'orderable'     => false,

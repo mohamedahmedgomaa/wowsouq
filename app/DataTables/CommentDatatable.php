@@ -51,13 +51,6 @@ class CommentDatatable extends DataTable
                 'dom'        => 'Blfrtip',
                 'lengthMenu' => [[10,25,50,100], [10,25,50, trans('admin.all_record')]],
                 'buttons'    =>[
-                    [
-                        'text' => '<i class="fa fa-plus"></i> '. trans('admin.create_payment_method'),
-                        'className' => 'btn btn-info',"action"=>"function(){
-                                    window.location.href = '". \URL::current() ."/create';
-                                 }"
-                    ],
-
                     ['extend'   => 'print', 'className' => 'btn btn-primary',
                         'text' => '<i class="fa fa-print"></i>'],
                     ['extend'   => 'csv', 'className' => 'btn btn-info',
@@ -116,11 +109,11 @@ class CommentDatatable extends DataTable
             ],[
                 'name'  => 'product.name',
                 'data'  => 'product.name',
-                'title' => trans('admin.product_id'),
+                'title' => trans('admin.product'),
             ],[
                 'name'  => 'client.name',
                 'data'  => 'client.name',
-                'title' => trans('admin.client_id'),
+                'title' => trans('admin.client'),
             ],[
                 'name'  => 'created_at',
                 'data'  => 'created_at',

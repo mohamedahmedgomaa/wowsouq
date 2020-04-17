@@ -22,7 +22,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Auth::routes(['register' => false]);
 
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
 
         Route::group(['namespace' => 'Admin'], function () {
 
@@ -33,11 +33,30 @@ Route::group(['prefix' => 'admin'], function () {
             Route::post('/change-password', 'AdminController@changePassword')->name('changePassword');
             Route::get('/get-change-password', 'AdminController@getChangePassword')->name('getChangePassword');
 
+            Route::resource('permission', 'PermissionController');
+            Route::delete('permission/destroy/all', 'PermissionController@multi_delete');
+
+            Route::resource('role', 'RoleController');
+            Route::delete('role/destroy/all', 'RoleController@multi_delete');
+
             Route::resource('client', 'ClientController');
             Route::delete('client/destroy/all', 'ClientController@multi_delete');
+            Route::post('/client/wallet/{id}', 'ClientController@wallet')->name('clients.wallet');
+            Route::get('/clients/trashed', 'ClientController@trashed')->name('clients.trashed'); // Route Soft Deleted
+            Route::post('/clients/soft-delete/{id}', 'ClientController@softDelete')->name('clients.soft.delete');
+            Route::get('/clients/restore/{id}', 'ClientController@restore')->name('clients.restore');
+
 
             Route::resource('seller', 'SellerController');
             Route::delete('seller/destroy/all', 'SellerController@multi_delete');
+            Route::get('/seller/activated/{id}', 'SellerController@activated')->name('sellers.activated');
+            Route::get('/seller/not-activated/{id}', 'SellerController@notActivated')->name('sellers.notActivated');
+            Route::get('/seller/forbidden/{id}', 'SellerController@forbidden')->name('sellers.forbidden');
+            Route::post('/seller/wallet/{id}', 'SellerController@wallet')->name('sellers.wallet');
+            Route::get('/sellers/trashed', 'SellerController@trashed')->name('sellers.trashed'); // Route Soft Deleted
+            Route::post('/sellers/soft-delete/{id}', 'SellerController@softDelete')->name('sellers.soft.delete');
+            Route::get('/sellers/restore/{id}', 'SellerController@restore')->name('sellers.restore');
+
 
             Route::resource('category', 'CategoryController');
             Route::delete('category/destroy/all', 'CategoryController@multi_delete');

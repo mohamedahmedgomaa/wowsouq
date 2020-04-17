@@ -1,4 +1,9 @@
 @extends('admin.layouts.app')
+@inject('perm', 'Spatie\Permission\Models\Role')
+
+<?php
+$roles = $perm->pluck('name', 'id')->toArray();
+?>
 @section('page_title')
     {{trans('admin.adminEdit')}}
 @endsection
@@ -24,6 +29,34 @@
                         'method' =>'put'
                     ]) !!}
                     @include('admin.admins.form')
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label for="name">{{trans('admin.roles')}}</label><br>
+                            <input id="select-all" type="checkbox"><label for='select-all'>اختيار الكل</label>
+                            <br>
+                            <div class="row">
+                                @foreach($perm->all() as $role)
+                                    <div class="col-sm-3">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="roles[]" value="{{$role->id}}"
+                                                       @if($model->hasRole($role->name))
+                                                       checked="checked"
+                                                    @endif
+                                                >
+                                                {{$role->name_ar}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">{{trans('admin.submit')}}</button>
+                    </div>
                     {!! Form::close() !!}
                 </div>
                 <!-- /.box-body -->
@@ -36,3 +69,10 @@
 </section>
 <!-- /.content -->
 @endsection
+@push('js')
+    <script>
+        $("#select-all").click(function(){
+            $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+        });
+    </script>
+@endpush

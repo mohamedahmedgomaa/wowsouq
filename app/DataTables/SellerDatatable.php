@@ -21,10 +21,16 @@ class SellerDatatable extends DataTable
             ->addColumn('checkbox', 'admin.sellers.btn.checkbox')
             ->addColumn('edit', 'admin.sellers.btn.edit')
             ->addColumn('delete', 'admin.sellers.btn.delete')
+            ->addColumn('active', 'admin.sellers.btn.active')
+            ->addColumn('wallets', 'admin.sellers.btn.wallet')
+            ->addColumn('image', 'admin.sellers.btn.image')
             ->rawColumns([
+                'checkbox',
                 'edit',
                 'delete',
-                'checkbox',
+                'active',
+                'wallets',
+                'image',
             ]);
     }
 
@@ -74,7 +80,7 @@ class SellerDatatable extends DataTable
                     ],
                 ],
                 'initComplete' => " function () {
-                            this.api().columns([2,3,4,5]).every(function() {
+                            this.api().columns([2,3,4]).every(function() {
                                     var column = this;
                                     var input = document.createElement(\"input\");
                                     $(input).appendTo($(column.footer()).empty())
@@ -120,6 +126,15 @@ class SellerDatatable extends DataTable
                 'data'  => 'phone',
                 'title' => trans('admin.phone'),
             ],[
+                'name'          => 'image',
+                'data'          => 'image',
+                'title'         => trans('admin.image'),
+                'exportable'    => false,
+                'printable'     => false,
+                'orderable'     => false,
+                'searchable'    => false,
+
+            ],[
                 'name'  => 'delivery',
                 'data'  => 'delivery',
                 'title' => trans('admin.delivery'),
@@ -128,13 +143,22 @@ class SellerDatatable extends DataTable
                 'data'  => 'wallet',
                 'title' => trans('admin.wallet'),
             ],[
-                'name'  => 'created_at',
-                'data'  => 'created_at',
-                'title' => trans('admin.created_at'),
+                'name'  => 'wallets',
+                'data'  => 'wallets',
+                'title' => trans('admin.wallets'),
+                'exportable'    => false,
+                'printable'     => false,
+                'orderable'     => false,
+                'searchable'    => false,
             ],[
-                'name'  => 'updated_at',
-                'data'  => 'updated_at',
-                'title' => trans('admin.updated_at'),
+                'name'          => 'active',
+                'data'          => 'active',
+                'title'         => trans('admin.active'),
+                'exportable'    => false,
+                'printable'     => false,
+                'orderable'     => false,
+                'searchable'    => false,
+
             ],[
                 'name'          => 'edit',
                 'data'          => 'edit',

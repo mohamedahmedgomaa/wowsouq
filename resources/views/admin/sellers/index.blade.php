@@ -11,7 +11,7 @@
         <!-- /.box-header -->
         <div class="box-body">
             {!! Form::open(['id'=>'form_data', 'url'=>url('admin/seller/destroy/all'),'method'=>'delete']) !!}
-            {!! $dataTable->table(['class' => 'dataTable table table-striped table-hover'], true) !!}
+            {!! $dataTable->table(['class' => 'table table-bordered table-hover dataTable'], true) !!}
             {!! Form::close() !!}
         </div>
         <!-- /.box-body -->

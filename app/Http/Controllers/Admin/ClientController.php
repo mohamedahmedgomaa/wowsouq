@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\ClientSoftDeleteDatatable;
 use App\Model\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -199,5 +200,35 @@ class ClientController extends Controller
         }
         session()->flash('success', trans('admin.deleted_record'));
         return redirect(url('admin/client'));
+    }
+
+
+    public function wallet(Request $request,$id)
+    {
+        $wallet = Client::findOrFail($id);
+        $wallet->wallet = $wallet->wallet + $request->wallet;
+        $wallet->save();
+        session()->flash('success', trans('admin.forbiddenMessage'));
+        return redirect(url('admin/client'));
+    }
+
+    public function trashed(ClientSoftDeleteDatatable $client)
+    {
+        return $client->render('admin.clients.soft_delete');
+    }
+
+
+    public function softDelete($id)
+    {
+        $client = Client::withTrashed()->where('id', $id)->first();
+        $client->forceDelete();
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $client = Client::withTrashed()->where('id', $id)->first();
+        $client->restore();
+        return redirect()->back();
     }
 }

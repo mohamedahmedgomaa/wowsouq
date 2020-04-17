@@ -21,6 +21,18 @@
                 <div class="box-body">
                     {!! Form::model($model, ['action' => 'Admin\AdminController@store']) !!}
                     @include('admin.admins.form')
+
+                    <div class="form-group">
+                        <label for="roles">قائمه الرتب</label>
+                        {!! Form::select('roles[]',$roles,null, [
+                        'class'=>'form-control select2',
+                        'multiple' => 'multiple'
+                        ]) !!}
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">{{trans('admin.submit')}}</button>
+                    </div>
                     {!! Form::close() !!}
                 </div>
                 <!-- /.box-body -->

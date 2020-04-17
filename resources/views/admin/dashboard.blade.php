@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 @section('page_title')
-    {{trans('admin.dashboard')}}
+    {{trans('admin.statistics')}}
 @endsection
 @section('small_title')
-    {{trans('admin.statistics')}}
+    {{trans('admin.dashboard')}}
 @endsection
 @section('content')
 
@@ -31,7 +31,7 @@
                     <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{trans('admin.clients')}}</span>
+                        <span class="info-box-text">{{trans('admin.clientss')}}</span>
                         <span class="info-box-number">{{$clients}}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -91,7 +91,7 @@
                     <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{trans('admin.sellers')}}</span>
+                        <span class="info-box-text">{{trans('admin.sellerss')}}</span>
                         <span class="info-box-number">{{$sellers}}</span>
                     </div>
                     <!-- /.info-box-content -->

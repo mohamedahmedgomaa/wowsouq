@@ -21,10 +21,14 @@ class ClientDatatable extends DataTable
             ->addColumn('checkbox', 'admin.clients.btn.checkbox')
             ->addColumn('edit', 'admin.clients.btn.edit')
             ->addColumn('delete', 'admin.clients.btn.delete')
+            ->addColumn('wallets', 'admin.clients.btn.wallet')
+            ->addColumn('image', 'admin.clients.btn.image')
             ->rawColumns([
+                'checkbox',
                 'edit',
                 'delete',
-                'checkbox',
+                'wallets',
+                'image',
             ]);
     }
 
@@ -74,7 +78,7 @@ class ClientDatatable extends DataTable
                     ],
                 ],
                 'initComplete' => " function () {
-                            this.api().columns([2,3,4,5]).every(function() {
+                            this.api().columns([2,3,4,5,6]).every(function() {
                                     var column = this;
                                     var input = document.createElement(\"input\");
                                     $(input).appendTo($(column.footer()).empty())
@@ -120,17 +124,31 @@ class ClientDatatable extends DataTable
                 'data'  => 'phone',
                 'title' => trans('admin.phone'),
             ],[
-                'name'  => 'wallet',
-                'data'  => 'wallet',
-                'title' => trans('admin.wallet'),
+                'name'          => 'image',
+                'data'          => 'image',
+                'title'         => trans('admin.image'),
+                'exportable'    => false,
+                'printable'     => false,
+                'orderable'     => false,
+                'searchable'    => false,
+
             ],[
                 'name'  => 'created_at',
                 'data'  => 'created_at',
                 'title' => trans('admin.created_at'),
             ],[
-                'name'  => 'updated_at',
-                'data'  => 'updated_at',
-                'title' => trans('admin.updated_at'),
+                'name'  => 'wallet',
+                'data'  => 'wallet',
+                'title' => trans('admin.wallet'),
+            ],[
+                'name'          => 'wallets',
+                'data'          => 'wallets',
+                'title'         => trans('admin.wallets'),
+                'exportable'    => false,
+                'printable'     => false,
+                'orderable'     => false,
+                'searchable'    => false,
+
             ],[
                 'name'          => 'edit',
                 'data'          => 'edit',

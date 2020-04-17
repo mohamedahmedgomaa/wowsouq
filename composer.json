@@ -15,6 +15,7 @@
         "laravel/passport": "^7.5",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8",
+        "spatie/laravel-permission": "^2.38",
         "yajra/laravel-datatables": "1.5",
         "yajra/laravel-datatables-oracle": "9.0"
     },

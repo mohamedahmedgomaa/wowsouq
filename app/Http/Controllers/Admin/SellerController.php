@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\SellerSoftDeleteDatatable;
 use App\Model\Seller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -194,5 +195,61 @@ class SellerController extends Controller
         }
         session()->flash('success', trans('admin.deleted_record'));
         return redirect(url('admin/seller'));
+    }
+
+    public function activated($id)
+    {
+        $activated = Seller::findOrFail($id);
+        $activated->status = 'activated';
+        $activated->save();
+        session()->flash('success', trans('admin.activatedMessage'));
+        return redirect(url('admin/seller'));
+    }
+
+    public function notActivated($id)
+    {
+        $not_activated = Seller::findOrFail($id);
+        $not_activated->status = 'not_activated';
+        $not_activated->save();
+        session()->flash('success', trans('admin.notActivatedMessage'));
+        return redirect(url('admin/seller'));
+    }
+
+    public function forbidden($id)
+    {
+        $forbidden = Seller::findOrFail($id);
+        $forbidden->status = 'forbidden';
+        $forbidden->save();
+        session()->flash('success', trans('admin.forbiddenMessage'));
+        return redirect(url('admin/seller'));
+    }
+
+    public function wallet(Request $request,$id)
+    {
+        $wallet = Seller::findOrFail($id);
+        $wallet->wallet = $wallet->wallet + $request->wallet;
+        $wallet->save();
+        session()->flash('success', trans('admin.forbiddenMessage'));
+        return redirect(url('admin/seller'));
+    }
+
+    public function trashed(SellerSoftDeleteDatatable $seller)
+    {
+        return $seller->render('admin.clients.soft_delete');
+    }
+
+
+    public function softDelete($id)
+    {
+        $client = Seller::withTrashed()->where('id', $id)->first();
+        $client->forceDelete();
+        return redirect()->back();
+    }
+
+    public function restore($id)
+    {
+        $client = Seller::withTrashed()->where('id', $id)->first();
+        $client->restore();
+        return redirect()->back();
     }
 }

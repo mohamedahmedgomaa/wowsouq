@@ -27,29 +27,34 @@
                     <!-- info row -->
                     <div class="row invoice-info">
                         <div class="col-sm-4 invoice-col">
-                            طلب من
+                            {{trans('admin.asked')}}
                             <address>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i> {{$order->client->name}} <br>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i> الهاتف : {{$order->client->phone}} <br>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i> البريد الإلكترونى : {{$order->client->email}}
+                                 {{$order->client->name}} <br>
+                                 {{trans('admin.phone')}} : {{$order->client->phone}}
                                 <br>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i> العنوان : {{$order->client->neighborhood->city->name}} - {{$order->client->neighborhood->name}}
+                                 {{trans('admin.email')}}
+                                : {{$order->client->email}}
+                                <br>
+                                 {{trans('admin.address')}}
+                                : {{$order->client->address}}
                             </address>
                         </div><!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            المطعم :
+                            {{trans('admin.seller')}} :
                             <address>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i><strong> {{$order->restaurant->name}}</strong><br>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i> البريد الإلكترونى : {{$order->restaurant->email}}<br>
-                                <i class="fa fa-angle-left" aria-hidden="true"></i> الهاتف :{{$order->restaurant->phone}}
+                                <strong> {{$order->seller->name}}</strong><br>
+                                 {{trans('admin.email')}}
+                                : {{$order->seller->email}}<br>
+                                {{trans('admin.phone')}}
+                                : {{$order->seller->phone}}
                             </address>
                         </div><!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            <i class="fa fa-angle-left" aria-hidden="true"></i><b> رقم الفاتورة #{{$order->id}}</b><br>
-                            <i class="fa fa-angle-left" aria-hidden="true"></i><b>  تفاصيل الطلب: {{$order->note}} </b><br> {{-- --}}
-                            <i class="fa fa-angle-left" aria-hidden="true"></i><b> حالةالطلب:{{$order->state}}</b>
+                            <b>{{trans('admin.order_id')}} : {{$order->id}}</b><br>
+                            <b>{{trans('admin.note')}} : {{$order->note}} </b><br>
+                            <b> {{trans('admin.status')}} : {{$order->status}}</b>
                             <br>
-                            <i class="fa fa-angle-left" aria-hidden="true"></i><b> الإجمالى:</b> {{$order->total}}
+                            <b>{{trans('admin.total')}} : </b> {{$order->total}}
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                     <!-- Table row -->
@@ -59,10 +64,10 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>إسم المنتج</th>
-                                    <th>الكمية</th>
-                                    <th>السعر</th>
-                                    <th>ملاحظة</th>
+                                    <th>{{trans('admin.product_name')}}</th>
+                                    <th>{{trans('admin.quantity')}}</th>
+                                    <th>{{trans('admin.price')}}</th>
+                                    <th>{{trans('admin.note')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -82,17 +87,17 @@
                                 @endforeach
                                 <tr>
                                     <td>--</td>
-                                    <td>تكلفة التوصيل</td>
+                                    <td>{{trans('admin.delivery')}}</td>
                                     <td>-</td>
                                     <td>{{$order->delivery}}</td>
                                     <td></td>
                                 </tr>
                                 <tr class="bg-success">
                                     <td>--</td>
-                                    <td>الإجمالي</td>
+                                    <td>{{trans('admin.total')}}</td>
                                     <td>-</td>
                                     <td>
-                                        {{$order->total}}   ريال سعودى
+                                        {{$order->total}} $
                                     </td>
                                     <td></td>
                                 </tr>

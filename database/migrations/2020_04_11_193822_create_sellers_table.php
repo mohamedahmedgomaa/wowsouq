@@ -19,7 +19,7 @@ class CreateSellersTable extends Migration {
             $table->string('address')->nullable();
             $table->decimal('longitude', 10,8)->nullable();
             $table->decimal('latitude', 10,8)->nullable();
-            $table->enum('status', array('0', '1'));
+            $table->enum('status', array('activated', 'not_activated', 'forbidden'));
             $table->string('pin_code')->nullable();
             $table->timestamps();
             $table->softDeletes();
