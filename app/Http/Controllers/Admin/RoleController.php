@@ -138,7 +138,7 @@ class RoleController extends Controller
     public function destroy($id)
     {
         Role::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/role'));
     }
 
@@ -149,7 +149,7 @@ class RoleController extends Controller
         } else {
             Role::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/role'));
     }
 

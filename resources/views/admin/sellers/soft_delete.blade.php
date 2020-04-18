@@ -10,6 +10,7 @@
     <div class="box">
         <!-- /.box-header -->
         <div class="box-body">
+            @include('flash::message')
             {!! $dataTable->table(['class' => 'dataTable table table-striped table-hover'], true) !!}
         </div>
         <!-- /.box-body -->

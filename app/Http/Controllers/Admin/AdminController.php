@@ -68,7 +68,7 @@ class AdminController extends Controller
         $request->merge(['password' => bcrypt($request->password)]);
         $user = User::create($request->except('roles'));
         $user->syncRoles($request->input('roles'));
-        flash()->success("Success");
+        flash()->success(trans('admin.createMessageSuccess'));
         return redirect(route('admin.index'));
     }
 
@@ -138,7 +138,7 @@ class AdminController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/admin'));
     }
 
@@ -149,7 +149,7 @@ class AdminController extends Controller
         } else {
             User::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/admin'));
     }
 

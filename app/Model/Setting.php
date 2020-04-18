@@ -9,6 +9,8 @@ class Setting extends Model
 
     protected $table = 'settings';
     public $timestamps = true;
-    protected $fillable = array('phone', 'email', 'text', 'image', 'whats_app', 'instagram', 'you_tube', 'facebook');
+    protected $fillable = array('phone', 'email', 'text', 'image',
+        'image_login_client', 'image_register_client', 'image_wow_souq',
+        'whats_app', 'instagram', 'you_tube', 'facebook');
 
 }

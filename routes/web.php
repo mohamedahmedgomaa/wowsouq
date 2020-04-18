@@ -14,10 +14,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['prefix' => 'admin'], function () {
 
     Auth::routes(['register' => false]);
@@ -79,9 +75,44 @@ Route::group(['prefix' => 'admin'], function () {
         });
     });
 
-    Route::get('lang/{lang}', function($lang) {
+    Route::get('lang/{lang}', function ($lang) {
         session()->has('lang') ? session()->forget('lang') : '';
         $lang == 'ar' ? session()->put('lang', 'ar') : session()->put('lang', 'en');
         return back();
     });
+});
+
+// Route Web Site Wow SouQ
+
+Route::group(['namespace' => 'WowSouq'], function () {
+
+    Route::get('/', 'GeneralController@wow_souq')->name('index');
+
+    Route::group(['namespace' => 'Client', 'prefix' => 'client'], function () {
+
+        Route::get('/login', 'AuthController@getLogin')->name('wowsouq.client.get_login');
+        Route::post('/login', 'AuthController@login')->name('wowsouq.client.login');
+
+        Route::get('/register', 'AuthController@getRegister')->name('wowsouq.client.get_register');
+        Route::post('/register', 'AuthController@register')->name('wowsouq.client.register');
+
+        Route::get('/logout', 'AuthController@logout')->name('wowsouq.client.logout');
+        Route::post('/logout', 'AuthController@logout')->name('wowsouq.client.logout');
+
+        Route::group(['middleware' => ['auth:clients']], function () {
+
+        });
+
+    });
+
+
+    Route::group(['namespace' => 'Seller', 'prefix' => 'seller'], function () {
+
+
+        Route::group(['middleware' => ['auth:sellers']], function () {
+
+        });
+
+    });
+
 });

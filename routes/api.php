@@ -39,6 +39,9 @@ Route::group(['namespace' => 'Api'], function () {
             Route::post('profile/update', 'MainController@profileUpdate');
             Route::post('like', 'MainController@like');
 
+            Route::post('create-token', 'MainController@createToken');
+            Route::post('remove-token', 'MainController@removeToken');
+
             // Order Controller
 
             Route::get('new-order', 'OrderController@newOrder');
@@ -74,6 +77,15 @@ Route::group(['namespace' => 'Api'], function () {
             Route::post('wallet/create', 'MainController@walletCreate');
             Route::post('password/update', 'MainController@passwordUpdate');
             Route::post('profile/update', 'MainController@profileUpdate');
+
+            Route::post('create-token', 'MainController@createToken');
+            Route::post('remove-token', 'MainController@removeToken');
+
+            Route::get('products', 'MainController@products');
+            Route::get('show-product', 'MainController@showProduct');
+            Route::post('create-product', 'MainController@createProduct');
+            Route::post('update-product', 'MainController@updateProduct');
+            Route::post('remove-product', 'MainController@removeProduct');
 
             // Order Controller
 

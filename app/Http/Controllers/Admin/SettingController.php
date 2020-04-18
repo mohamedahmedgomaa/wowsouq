@@ -22,6 +22,9 @@ class SettingController extends Controller
             'email' => 'required',
             'text' => 'required',
             'image' => v_image(),
+            'image_login_client' => v_image(),
+            'image_register_client' => v_image(),
+            'image_wow_souq' => v_image(),
             'whats_app' => 'required',
             'instagram' => 'required',
             'you_tube' => 'required',
@@ -36,6 +39,30 @@ class SettingController extends Controller
                 'path' => 'settings',
                 'upload_type' => 'single',
                 'delete_file' => settings()->image,
+            ]);
+        }
+        if (request()->hasFile('image_wow_souq')) {
+            $setting['image_wow_souq'] = up()->upload([
+                'file' => 'image_wow_souq',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_wow_souq,
+            ]);
+        }
+        if (request()->hasFile('image_login_client')) {
+            $setting['image_login_client'] = up()->upload([
+                'file' => 'image_login_client',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_login_client,
+            ]);
+        }
+        if (request()->hasFile('image_register_client')) {
+            $setting['image_register_client'] = up()->upload([
+                'file' => 'image_register_client',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_register_client,
             ]);
         }
 

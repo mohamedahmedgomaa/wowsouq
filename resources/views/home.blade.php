@@ -1,6 +1,6 @@
-@extends('admin.layouts.app')
+@extends('wow_souq.layouts.app')
 
-@section('content')
+@section('title')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

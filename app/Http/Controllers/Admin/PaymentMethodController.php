@@ -107,7 +107,7 @@ class PaymentMethodController extends Controller
     public function destroy($id)
     {
         PaymentMethod::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/payment-method'));
     }
 
@@ -118,7 +118,7 @@ class PaymentMethodController extends Controller
         } else {
             PaymentMethod::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/payment-method'));
     }
 }

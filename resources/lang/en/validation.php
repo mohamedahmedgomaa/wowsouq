@@ -161,6 +161,7 @@ return [
     'statusIsIn' => 'The status must be either 0 or 1',
     'genderIsIn' => 'The gender must be male or female',
     'passwordIsMin' => 'The password must not be less than 6 letters or numbers',
+    'passwordIsConfirmation' => 'Password Is Confirmation',
     'currentPasswordIsRequired' => 'The current password is required',
     'walletIsRequired' => 'Wallet Is Required',
     'imageIsImage' => 'The file must be an image',

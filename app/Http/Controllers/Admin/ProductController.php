@@ -50,6 +50,11 @@ class ProductController extends Controller
     {
         $input = $request->all();
 
+        if ($input['offer'] <= $input['price']) {
+            flash()->error(trans('admin.The offer price is smaller than or equal to the product price'));
+            return redirect()->back();
+        }
+
         if (request()->hasFile('image')) {
             $input['image'] = up()->upload([
                 'file' => 'image',
@@ -122,6 +127,12 @@ class ProductController extends Controller
             'number_product.required' => trans('validation.numberProductIsRequired'),
         ]);
 
+
+        if ($request->offer <= $request->price) {
+            flash()->error(trans('admin.The offer price is smaller than or equal to the product price'));
+            return redirect()->back();
+        }
+
         $records->update($request->except('image'));
 
         if (request()->hasFile('image')) {
@@ -148,7 +159,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/product'));
     }
 
@@ -159,7 +170,7 @@ class ProductController extends Controller
         } else {
             Product::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/product'));
     }
 }

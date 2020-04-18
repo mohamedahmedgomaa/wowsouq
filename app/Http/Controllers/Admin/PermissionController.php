@@ -117,7 +117,7 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         Permission::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/permission'));
     }
 
@@ -128,7 +128,7 @@ class PermissionController extends Controller
         } else {
             Permission::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/permission'));
     }
 

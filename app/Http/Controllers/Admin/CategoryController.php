@@ -150,7 +150,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/category'));
     }
 
@@ -161,7 +161,7 @@ class CategoryController extends Controller
         } else {
             Category::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/category'));
     }
 }

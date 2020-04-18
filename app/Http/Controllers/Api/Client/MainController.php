@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Client;
 
 use App\Model\Client;
 use App\Model\Like;
+use App\Model\Token;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -73,15 +74,14 @@ class MainController extends Controller
         $client = Client::findOrFail(auth()->user()->id);
         $validator = validator()->make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+            'email' => 'required|email|unique:clients,email,' . auth()->user()->id,
             'phone' => 'required',
-            'image' => 'required|'.v_image(),
-            'age' => 'required',
+            'image' => v_image(),
+            'age' => 'required|numeric',
             'gender' => 'required|in:male,female',
             'address' => 'required',
             'longitude' => 'required',
             'latitude' => 'required',
-            'status' => 'required|in:0,1',
         ], [
             'name.required' => trans('validation.nameIsRequired'),
             'email.required' => trans('validation.emailIsRequired'),
@@ -96,8 +96,6 @@ class MainController extends Controller
             'address.required' => trans('validation.addressIsRequired'),
             'longitude.required' => trans('validation.longitudeIsRequired'),
             'latitude.required' => trans('validation.latitudeIsRequired'),
-            'status.required' => trans('validation.statusIsRequired'),
-            'status.in' => trans('validation.statusIsIn'),
             'gender.in' => trans('validation.genderIsIn'),
         ]);
 
@@ -144,5 +142,35 @@ class MainController extends Controller
         ]);
 
         return responseJson(200, trans('api.createMessageSuccess'), $like);
+    }
+
+    public function createToken(Request $request)
+    {
+        $validator = validator()->make($request->all(), [
+            'token' => 'required',
+            'type' => 'required|in:android,ios',
+
+        ]);
+        if ($validator->fails()) {
+            return responseJson(400, $validator->errors()->first(), $validator->errors());
+        }
+
+        Token::where('token', $request->token)->delete();
+        $token = $request->user()->tokens()->create($request->all());
+        return responseJson(200, trans('api.createMessageSuccess'), $token);
+    }
+
+    public function removeToken(Request $request)
+    {
+        $validator = validator()->make($request->all(), [
+            'token' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return responseJson(400, $validator->errors()->first(), $validator->errors());
+        }
+
+        Token::where('token', $request->token)->delete();
+
+        return responseJson(200, trans('api.removeMessageSuccess'));
     }
 }

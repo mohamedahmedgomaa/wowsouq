@@ -85,7 +85,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         Order::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/order'));
     }
 
@@ -96,7 +96,7 @@ class OrderController extends Controller
         } else {
             Order::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/order'));
     }
 }

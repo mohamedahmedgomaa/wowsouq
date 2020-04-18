@@ -3,23 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\ClientSoftDeleteDatatable;
+use App\Http\Requests\ClientCreateRequest;
 use App\Model\Client;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DataTables\ClientDatatable;
+use Illuminate\Routing\Redirector;
 
 class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param AdminDatatable $admin
+     * @param ClientDatatable $client
      * @return void
      */
-    public function index(ClientDatatable $admin)
+    public function index(ClientDatatable $client)
     {
         //
-        return $admin->render('admin.clients.index');
+        return $client->render('admin.clients.index');
     }
 
     /**
@@ -35,43 +38,11 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Validation\ValidationException
+     * @param ClientCreateRequest $request
+     * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(ClientCreateRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:clients',
-            'password' => 'required|confirmed|min:6',
-            'phone' => 'required',
-            'image' => 'required|'.v_image(),
-            'age' => 'required',
-            'gender' => 'required|in:male,female',
-            'address' => 'nullable',
-            'longitude' => 'nullable',
-            'latitude' => 'nullable',
-        ], [
-            'name.required' => trans('validation.nameIsRequired'),
-            'email.required' => trans('validation.emailIsRequired'),
-            'email.email' => trans('validation.emailIsEmail'),
-            'email.unique' => trans('validation.emailIsUnique'),
-            'password.required' => trans('validation.passwordIsRequired'),
-            'password.confirmed' => trans('api.passwordIsConfirmation'),
-            'password.min' => trans('api.passwordIsMin'),
-            'phone.required' => trans('validation.phoneIsRequired'),
-            'age.required' => trans('validation.ageIsRequired'),
-            'gender.required' => trans('validation.genderIsRequired'),
-            'image.required' => trans('validation.imageIsRequired'),
-            'image.image' => trans('validation.imageIsImage'),
-            'image.mimes' => trans('validation.imageIsMimes'),
-            'address.required' => trans('validation.addressIsRequired'),
-            'longitude.required' => trans('validation.longitudeIsRequired'),
-            'latitude.required' => trans('validation.latitudeIsRequired'),
-            'gender.in' => trans('validation.genderIsIn'),
-        ]);
-
         $input = $request->all();
 
         if (request()->hasFile('image')) {
@@ -116,9 +87,9 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
@@ -141,8 +112,8 @@ class ClientController extends Controller
             'email.email' => trans('validation.emailIsEmail'),
             'email.unique' => trans('validation.emailIsUnique'),
             'password.required' => trans('validation.passwordIsRequired'),
-            'password.confirmed' => trans('api.passwordIsConfirmation'),
-            'password.min' => trans('api.passwordIsMin'),
+            'password.confirmed' => trans('validation.passwordIsConfirmation'),
+            'password.min' => trans('validation.passwordIsMin'),
             'phone.required' => trans('validation.phoneIsRequired'),
             'age.required' => trans('validation.ageIsRequired'),
             'gender.required' => trans('validation.genderIsRequired'),
@@ -182,12 +153,12 @@ class ClientController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function destroy($id)
     {
         Client::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/client'));
     }
 
@@ -198,7 +169,8 @@ class ClientController extends Controller
         } else {
             Client::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/client'));
     }
 
@@ -208,7 +180,7 @@ class ClientController extends Controller
         $wallet = Client::findOrFail($id);
         $wallet->wallet = $wallet->wallet + $request->wallet;
         $wallet->save();
-        session()->flash('success', trans('admin.forbiddenMessage'));
+        flash()->success(trans('admin.editMessageSuccess'));
         return redirect(url('admin/client'));
     }
 
@@ -222,6 +194,7 @@ class ClientController extends Controller
     {
         $client = Client::withTrashed()->where('id', $id)->first();
         $client->forceDelete();
+        flash()->success(trans('admin.forceDeleted'));
         return redirect()->back();
     }
 
@@ -229,6 +202,7 @@ class ClientController extends Controller
     {
         $client = Client::withTrashed()->where('id', $id)->first();
         $client->restore();
+        flash()->success(trans('admin.restoreData'));
         return redirect()->back();
     }
 }

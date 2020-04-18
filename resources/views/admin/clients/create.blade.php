@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@inject('model', 'App\User')
+@inject('model', 'App\Model\Client')
 @section('page_title')
     {{trans('admin.clientCreate')}}
 @endsection

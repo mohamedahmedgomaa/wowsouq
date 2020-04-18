@@ -66,7 +66,7 @@
     {!! Form::number('age', null , ['class' => 'form-control']) !!}
 </div>
 
-<label for="age">{{trans('admin.gender')}}</label>
+<label for="gender">{{trans('admin.gender')}}</label>
 <div class="form-group form-control">
     <div class="row">
         <div class="col-lg-2" style="display: inline">

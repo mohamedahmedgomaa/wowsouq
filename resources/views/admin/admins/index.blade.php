@@ -8,8 +8,9 @@
 @endsection
 @section('content')
     <div class="box">
-        <!-- /.box-header -->
+    <!-- /.box-header -->
         <div class="box-body">
+            @include('flash::message')
             {!! Form::open(['id'=>'form_data', 'url'=>url('admin/admin/destroy/all'),'method'=>'delete']) !!}
             {!! $dataTable->table(['class' => 'dataTable table table-striped table-hover'], true) !!}
             {!! Form::close() !!}

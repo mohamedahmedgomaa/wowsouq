@@ -35,7 +35,7 @@
 {{--                        </div>--}}
 
                         <div class="form-group">
-                            <label for="roles">قائمه الرتب</label>
+                            <label for="roles">{{trans('admin.permissions')}}</label>
                             {!! Form::select('permission[]',$permission,null, [
                             'class'=>'form-control select2',
                             'multiple' => 'multiple'

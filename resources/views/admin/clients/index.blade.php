@@ -10,6 +10,7 @@
     <div class="box">
         <!-- /.box-header -->
         <div class="box-body">
+            @include('flash::message')
             {!! Form::open(['id'=>'form_data', 'url'=>url('admin/client/destroy/all'),'method'=>'delete']) !!}
             {!! $dataTable->table(['class' => 'dataTable table table-striped table-hover'], true) !!}
             {!! Form::close() !!}

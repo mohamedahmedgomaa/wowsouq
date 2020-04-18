@@ -58,6 +58,31 @@
                                 <textarea name="contents" class="form-control" rows="8">{{$settings->contents}}</textarea>
                             </div>
 
+
+                            <div class="form-group">
+                                <label for="image_wow_souq">{{trans('admin.image_wow_souq')}}</label>
+                                <input type="file" class="form-control-file" name="image_wow_souq">
+                                <img src="{{Storage::url($settings->image_wow_souq)}}" alt="000000" class="img-thumbnail"
+                                     width="50px" height="50px">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="image_login_client">{{trans('admin.image_login_client')}}</label>
+                                <input type="file" class="form-control-file" name="image_login_client">
+                                <img src="{{Storage::url($settings->image_login_client)}}" alt="000000" class="img-thumbnail"
+                                     width="50px" height="50px">
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="image_register_client">{{trans('admin.image_register_client')}}</label>
+                                <input type="file" class="form-control-file" name="image_register_client">
+                                <img src="{{Storage::url($settings->image_register_client)}}" alt="000000" class="img-thumbnail"
+                                     width="50px" height="50px">
+                            </div>
+
                             <div class="form-group">
                                 <label for="whats_app">{{trans('admin.whats_app')}}</label>
                                 <input type="text" class="form-control" name="whats_app"  value="{{$settings->whats_app}}">

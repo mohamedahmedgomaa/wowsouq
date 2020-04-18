@@ -77,7 +77,7 @@ class CommentController extends Controller
     public function destroy($id)
     {
         Comment::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/comment'));
     }
 
@@ -88,7 +88,7 @@ class CommentController extends Controller
         } else {
             Comment::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/comment'));
     }
 }

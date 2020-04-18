@@ -3,23 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\DataTables\SellerSoftDeleteDatatable;
+use App\Http\Requests\SellerRequest;
 use App\Model\Seller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DataTables\SellerDatatable;
+use Illuminate\Routing\Redirector;
 
 class SellerController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param AdminDatatable $admin
+     * @param SellerDatatable $seller
      * @return void
      */
-    public function index(SellerDatatable $admin)
+    public function index(SellerDatatable $seller)
     {
         //
-        return $admin->render('admin.sellers.index');
+        return $seller->render('admin.sellers.index');
     }
 
     /**
@@ -35,42 +38,11 @@ class SellerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Validation\ValidationException
+     * @param SellerRequest $request
+     * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(SellerRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:sellers',
-            'password' => 'required|confirmed|min:6',
-            'phone' => 'required',
-            'image' => 'required|'.v_image(),
-            'delivery' => 'required',
-            'address' => 'nullable',
-            'longitude' => 'nullable',
-            'latitude' => 'nullable',
-        ], [
-            'name.required' => trans('validation.nameIsRequired'),
-            'email.required' => trans('validation.emailIsRequired'),
-            'email.email' => trans('validation.emailIsEmail'),
-            'email.unique' => trans('validation.emailIsUnique'),
-            'password.required' => trans('validation.passwordIsRequired'),
-            'password.confirmed' => trans('api.passwordIsConfirmation'),
-            'password.min' => trans('api.passwordIsMin'),
-            'phone.required' => trans('validation.phoneIsRequired'),
-            'age.required' => trans('validation.ageIsRequired'),
-            'gender.required' => trans('validation.genderIsRequired'),
-            'image.required' => trans('validation.imageIsRequired'),
-            'image.image' => trans('validation.imageIsImage'),
-            'image.mimes' => trans('validation.imageIsMimes'),
-            'address.required' => trans('validation.addressIsRequired'),
-            'longitude.required' => trans('validation.longitudeIsRequired'),
-            'latitude.required' => trans('validation.latitudeIsRequired'),
-            'gender.in' => trans('validation.genderIsIn'),
-        ]);
-
         $input = $request->all();
 
         if (request()->hasFile('image')) {
@@ -116,9 +88,9 @@ class SellerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
@@ -140,8 +112,8 @@ class SellerController extends Controller
             'email.email' => trans('validation.emailIsEmail'),
             'email.unique' => trans('validation.emailIsUnique'),
             'password.required' => trans('validation.passwordIsRequired'),
-            'password.confirmed' => trans('api.passwordIsConfirmation'),
-            'password.min' => trans('api.passwordIsMin'),
+            'password.confirmed' => trans('validation.passwordIsConfirmation'),
+            'password.min' => trans('validation.passwordIsMin'),
             'phone.required' => trans('validation.phoneIsRequired'),
             'delivery.required' => trans('validation.ageIsRequired'),
             'image.required' => trans('validation.imageIsRequired'),
@@ -177,12 +149,12 @@ class SellerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function destroy($id)
     {
         Seller::find($id)->delete();
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/seller'));
     }
 
@@ -193,7 +165,7 @@ class SellerController extends Controller
         } else {
             Seller::find(request('item'))->delete();
         }
-        session()->flash('success', trans('admin.deleted_record'));
+        flash()->success(trans('admin.deleted_record'));
         return redirect(url('admin/seller'));
     }
 
@@ -202,7 +174,7 @@ class SellerController extends Controller
         $activated = Seller::findOrFail($id);
         $activated->status = 'activated';
         $activated->save();
-        session()->flash('success', trans('admin.activatedMessage'));
+        flash()->success(trans('admin.activatedMessage'));
         return redirect(url('admin/seller'));
     }
 
@@ -211,7 +183,7 @@ class SellerController extends Controller
         $not_activated = Seller::findOrFail($id);
         $not_activated->status = 'not_activated';
         $not_activated->save();
-        session()->flash('success', trans('admin.notActivatedMessage'));
+        flash()->success(trans('admin.notActivatedMessage'));
         return redirect(url('admin/seller'));
     }
 
@@ -220,16 +192,16 @@ class SellerController extends Controller
         $forbidden = Seller::findOrFail($id);
         $forbidden->status = 'forbidden';
         $forbidden->save();
-        session()->flash('success', trans('admin.forbiddenMessage'));
+        flash()->success(trans('admin.forbiddenMessage'));
         return redirect(url('admin/seller'));
     }
 
-    public function wallet(Request $request,$id)
+    public function wallet(Request $request, $id)
     {
         $wallet = Seller::findOrFail($id);
         $wallet->wallet = $wallet->wallet + $request->wallet;
         $wallet->save();
-        session()->flash('success', trans('admin.forbiddenMessage'));
+        flash()->success(trans('admin.editMessageSuccess'));
         return redirect(url('admin/seller'));
     }
 
@@ -243,6 +215,7 @@ class SellerController extends Controller
     {
         $client = Seller::withTrashed()->where('id', $id)->first();
         $client->forceDelete();
+        flash()->success(trans('admin.forceDeleted'));
         return redirect()->back();
     }
 
@@ -250,6 +223,7 @@ class SellerController extends Controller
     {
         $client = Seller::withTrashed()->where('id', $id)->first();
         $client->restore();
+        flash()->success(trans('admin.restoreData'));
         return redirect()->back();
     }
 }

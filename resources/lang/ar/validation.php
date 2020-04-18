@@ -28,6 +28,7 @@ return [
     'statusIsIn' => 'يجب ان تكون الحاله اما 0 او 1',
     'genderIsIn' => 'يجب ان يكون الجنس ذكر او انثى',
     'passwordIsMin' => 'كلمه المرور لا يجب ان تقل عن 6 احرف او ارقام',
+    'passwordIsConfirmation' => 'كلمة المرور يجب ان تكون متطابقه',
     'currentPasswordIsRequired' => 'كلمه المرور الحاليه مطلوبه',
     'walletIsRequired' => 'المحفظه مطلوبه',
     'imageIsImage' => 'يجب ان يكون الملف صوره',
