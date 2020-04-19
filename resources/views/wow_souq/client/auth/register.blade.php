@@ -5,7 +5,7 @@
     @include('partials.validations_errors')
     <!--================Home Banner Area =================-->
     {{--    {{Storage::url(settings()->image)}}--}}
-
+    @include('flash::message')
     <section class="home_banner_area mb-40"
              style="background-image: url('{{Storage::url(settings()->image_register_client)}}'); margin-bottom: 0;background-size: cover;">
         <div class="banner_inner d-flex align-items-center">

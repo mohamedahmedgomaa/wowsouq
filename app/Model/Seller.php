@@ -26,7 +26,7 @@ class Seller extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany('App\Model\Order');
+        return $this->belongsToMany('App\Model\Order');
     }
 
     public function notifications()

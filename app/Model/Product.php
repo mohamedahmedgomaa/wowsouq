@@ -36,9 +36,14 @@ class Product extends Model
         return $this->belongsToMany('App\Model\Order');
     }
 
-    public function langProducts()
+    public function likes()
     {
-        return $this->hasMany('App\Model\LangProcuct');
+        return $this->hasMany('App\Model\Like');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Model\Comment');
     }
 
 }

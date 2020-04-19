@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="{{asset('wow_souq/css/responsive.css')}}"/>
 </head>
 
-<body>
+<body> {{--style="background-color: #FAFAFA"--}}
+
 <!--================Header Menu Area =================-->
 <header class="header_area">
     <div class="top_menu">
@@ -49,7 +50,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{asset('wow_souq')}}/contact.html">
+                                <a href="{{url('contact')}}">
                                     Contact Us
                                 </a>
                             </li>
@@ -81,7 +82,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light w-100">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="{{asset('wow_souq')}}/index.html">
+                <a class="navbar-brand logo_h" href="{{url('/')}}">
                     <img src="{{asset('wow_souq/img/logo.png')}}" style="width: 100px" alt=""/>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -97,42 +98,30 @@
                         <div class="col-lg-7 pr-0">
                             <ul class="nav navbar-nav center_nav pull-right">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="{{asset('wow_souq')}}/index.html">Home</a>
+                                    <a class="nav-link" href="{{url('/')}}">Home</a>
                                 </li>
                                 <li class="nav-item submenu dropdown">
                                     <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"
                                        data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Shop</a>
+                                       aria-expanded="false">{{trans('web.topProduct')}}</a>
                                     <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{asset('wow_souq')}}/category.html">Shop
-                                                Category</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{asset('wow_souq')}}/single-product.html">Product
-                                                Details</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{asset('wow_souq')}}/checkout.html">Product
-                                                Checkout</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{asset('wow_souq')}}/cart.html">Shopping Cart</a>
-                                        </li>
+                                        @foreach($top_products as $top_product)
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="{{url('product', $top_product->id)}}">{{$top_product->name}}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li class="nav-item submenu dropdown">
                                     <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"
                                        data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Blog</a>
+                                       aria-expanded="false">{{trans('web.categories')}}</a>
                                     <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{asset('wow_souq')}}/blog.html">Blog</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{asset('wow_souq')}}/single-blog.html">Blog
-                                                Details</a>
-                                        </li>
+                                        @foreach($categories as $category)
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">{{$category->name_ar}}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li class="nav-item submenu dropdown">
@@ -149,7 +138,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{asset('wow_souq')}}/contact.html">Contact</a>
+                                    <a class="nav-link" href="{{url('contact')}}">Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -162,9 +151,16 @@
                                     </a>
                                 </li>
 
+{{--                                <li class="nav-item">--}}
+{{--                                    <a href="{{asset('wow_souq')}}/#" class="icons">--}}
+{{--                                        <i class="ti-shopping-cart"></i>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+
                                 <li class="nav-item">
-                                    <a href="{{asset('wow_souq')}}/#" class="icons">
+                                    <a href="{{ route('client.shoppingCart') }}" class="icons">
                                         <i class="ti-shopping-cart"></i>
+                                        <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
                                     </a>
                                 </li>
 

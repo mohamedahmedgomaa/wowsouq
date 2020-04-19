@@ -87,6 +87,11 @@ Route::group(['prefix' => 'admin'], function () {
 Route::group(['namespace' => 'WowSouq'], function () {
 
     Route::get('/', 'GeneralController@wow_souq')->name('index');
+    Route::get('/contact', 'GeneralController@contact')->name('contact');
+    Route::post('/contact', 'GeneralController@contacts')->name('contacts');
+
+    // Product
+    Route::get('/product/{id}', 'GeneralController@product')->name('product');
 
     Route::group(['namespace' => 'Client', 'prefix' => 'client'], function () {
 
@@ -98,6 +103,18 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
         Route::get('/logout', 'AuthController@logout')->name('wowsouq.client.logout');
         Route::post('/logout', 'AuthController@logout')->name('wowsouq.client.logout');
+
+        Route::get('/forget/password', 'AuthController@getForgetPassword')->name('wowsouq.client.get.forget.password');
+        Route::post('/forget/password', 'AuthController@forgetPassword')->name('wowsouq.client.forget.password');
+        Route::post('/reset/code', 'AuthController@forgetPassword')->name('wowsouq.client.reset.code');
+
+        Route::get('/reset/password', 'AuthController@getResetPassword')->name('wowsouq.client.get.reset.password');
+        Route::post('/reset/password', 'AuthController@resetPassword')->name('wowsouq.client.reset.password');
+
+        Route::get('add-to-cart/{id}', 'MainController@getAddToCart')->name('client.getAddToCart');
+        Route::get('shopping-cart', 'MainController@shoppingCart')->name('client.shoppingCart'); // 14
+        Route::get('reduce/{id}', 'MainController@getReduceByOne')->name('client.reduceByOne');
+        Route::get('remove/{id}', 'MainController@getRemoveItem')->name('client.remove');
 
         Route::group(['middleware' => ['auth:clients']], function () {
 
