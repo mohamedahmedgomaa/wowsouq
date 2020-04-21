@@ -14,7 +14,7 @@ class Order extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('note', 'status', 'seller_id',
+    protected $fillable = array('note', 'status', 'seller_id', 'order_number',
         'client_id', 'price', 'delivery', 'commission', 'total', 'address', 'payment_method_id');
 
     public function products()

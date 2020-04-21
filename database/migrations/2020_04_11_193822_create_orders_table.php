@@ -10,6 +10,7 @@ class CreateOrdersTable extends Migration {
 		Schema::create('orders', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
+			$table->string('order_number');
 			$table->longText('note');
 			$table->enum('status', array('pending','accepted','rejected','delivered','declined'));
 			$table->integer('seller_id')->unsigned()->nullable();
