@@ -7,7 +7,7 @@
     {{--    {{Storage::url(settings()->image)}}--}}
     @include('flash::message')
     <section class="home_banner_area mb-40"
-             style="background-image: url('{{Storage::url(settings()->image_register_client)}}'); margin-bottom: 0;background-size: cover;">
+             style="background-image: url('{{Storage::url(settings()->image_register_seller)}}'); margin-bottom: 0;background-size: cover;">
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
                 <div class="border border-dark"
@@ -18,7 +18,7 @@
                         <h2 style="color: #ffffff;margin-right: 30px">{{trans('web.register')}}</h2>
                     </div>
 
-                    <form method="post" action="{{ route('wowsouq.client.register') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('wowsouq.seller.register') }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         {{--                    {!! Form::model($model, ['action' => 'WowSouq\Client\AuthController@register', 'files' => true]) !!}--}}
@@ -96,28 +96,15 @@
                             </div>
                         </div>
 
+
                         <div class="banner_content row" style="margin-top: 10px">
                             <div class="col-lg-10">
                                 <div class="mt-10">
-                                    <label style="color: #ffffff">{{trans('web.age')}}</label>
-                                    <input type="number" name="age" placeholder="{{trans('web.age')}}"
+                                    <label style="color: #ffffff">{{trans('web.delivery')}}</label>
+                                    <input type="number" name="delivery" placeholder="{{trans('web.delivery')}}"
                                            onfocus="this.placeholder = ''"
-                                           onblur="this.placeholder = '{{trans('web.age')}}'"
+                                           onblur="this.placeholder = '{{trans('web.delivery')}}'"
                                            required class="single-input-accent">
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <label for="gender" style="color: #ffffff;margin-top: 20px"
-                               class="">{{trans('web.gender')}}</label>
-                        <div class="form-group">
-                            <div class="row" style="color: #ffffff">
-                                <div class="col-lg-5" style="display: inline">
-                                    {!! Form::radio('gender', 'male', true) !!} {{trans('web.male')}}
-                                </div>
-                                <div class="col-lg-5" style="display: inline">
-                                    {!! Form::radio('gender', 'female') !!}  {{trans('web.female')}}
                                 </div>
                             </div>
                         </div>
@@ -128,11 +115,10 @@
                                     class="genric-btn primary-border circle">{{trans('web.register')}}</button>
                         </div>
                         <div class="col-lg-3" style="margin-top: 20px;font-size: large">
-                            <a href="{{url('client/login')}}" class="genric-btn primary circle"
-                               style="width: 300px;margin-left: 15px">{{trans('web.login')}}</a>
+                            <a href="{{url('seller/login')}}" class="genric-btn primary circle"
+                               style="width: 300px;margin-left: 15px">{{trans('web.do you have an account')}}</a>
                         </div>
                     </form>
-                    {{--                    {!! Form::close() !!}--}}
                 </div>
             </div>
         </div>

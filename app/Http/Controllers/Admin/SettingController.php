@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
@@ -25,6 +26,10 @@ class SettingController extends Controller
             'image_login_client' => v_image(),
             'image_register_client' => v_image(),
             'image_wow_souq' => v_image(),
+            'image_login_seller' => v_image(),
+            'image_register_seller' => v_image(),
+            'image_login_admin' => v_image(),
+            'image_product' => v_image(),
             'whats_app' => 'required',
             'instagram' => 'required',
             'you_tube' => 'required',
@@ -65,6 +70,62 @@ class SettingController extends Controller
                 'delete_file' => settings()->image_register_client,
             ]);
         }
+
+        if (request()->hasFile('image_login_seller')) {
+            $setting['image_login_seller'] = up()->upload([
+                'file' => 'image_login_seller',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_login_seller,
+            ]);
+        }
+
+        if (request()->hasFile('image_register_seller')) {
+            $setting['image_register_seller'] = up()->upload([
+                'file' => 'image_register_seller',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_register_seller,
+            ]);
+        }
+
+        if (request()->hasFile('image_login_admin')) {
+            $setting['image_login_admin'] = up()->upload([
+                'file' => 'image_login_admin',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_login_admin,
+            ]);
+        }
+
+        if (request()->hasFile('image_product')) {
+            $setting['image_product'] = up()->upload([
+                'file' => 'image_product',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_product,
+            ]);
+        }
+
+        if (request()->hasFile('image_profile_client')) {
+            $setting['image_profile_client'] = up()->upload([
+                'file' => 'image_profile_client',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_profile_client,
+            ]);
+        }
+
+        if (request()->hasFile('image_profile_seller')) {
+            $setting['image_profile_seller'] = up()->upload([
+                'file' => 'image_profile_seller',
+                'path' => 'settings',
+                'upload_type' => 'single',
+                'delete_file' => settings()->image_profile_seller,
+            ]);
+        }
+
+
 
         $setting->phone = $request->phone;
         $setting->email = $request->email;

@@ -44,7 +44,7 @@
                                 <label for="image">{{trans('admin.image')}}</label>
                                 <input type="file" class="form-control-file" name="image">
                                 <img src="{{Storage::url($settings->image)}}" alt="000000" class="img-thumbnail"
-                                     width="50px" height="50px">
+                                     width="100px" height="100px">
                             </div>
 
                             <div class="form-group">
@@ -63,7 +63,7 @@
                                 <label for="image_wow_souq">{{trans('admin.image_wow_souq')}}</label>
                                 <input type="file" class="form-control-file" name="image_wow_souq">
                                 <img src="{{Storage::url($settings->image_wow_souq)}}" alt="000000" class="img-thumbnail"
-                                     width="50px" height="50px">
+                                     width="100px" height="100px">
                             </div>
 
 
@@ -71,16 +71,57 @@
                                 <label for="image_login_client">{{trans('admin.image_login_client')}}</label>
                                 <input type="file" class="form-control-file" name="image_login_client">
                                 <img src="{{Storage::url($settings->image_login_client)}}" alt="000000" class="img-thumbnail"
-                                     width="50px" height="50px">
+                                     width="100px" height="100px">
                             </div>
-
 
 
                             <div class="form-group">
                                 <label for="image_register_client">{{trans('admin.image_register_client')}}</label>
                                 <input type="file" class="form-control-file" name="image_register_client">
                                 <img src="{{Storage::url($settings->image_register_client)}}" alt="000000" class="img-thumbnail"
-                                     width="50px" height="50px">
+                                     width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image_login_seller">{{trans('admin.image_login_seller')}}</label>
+                                <input type="file" class="form-control-file" name="image_login_seller">
+                                <img src="{{Storage::url($settings->image_login_seller)}}" alt="000000" class="img-thumbnail"
+                                     width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image_register_seller">{{trans('admin.image_register_seller')}}</label>
+                                <input type="file" class="form-control-file" name="image_register_seller">
+                                <img src="{{Storage::url($settings->image_register_seller)}}" alt="000000" class="img-thumbnail"
+                                     width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image_login_admin">{{trans('admin.image_login_admin')}}</label>
+                                <input type="file" class="form-control-file" name="image_login_admin">
+                                <img src="{{Storage::url($settings->image_login_admin)}}" alt="000000" class="img-thumbnail"
+                                     width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image_product">{{trans('admin.image_product')}}</label>
+                                <input type="file" class="form-control-file" name="image_product">
+                                <img src="{{Storage::url($settings->image_product)}}" alt="000000" class="img-thumbnail"
+                                     width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image_profile_client">{{trans('admin.image_profile_client')}}</label>
+                                <input type="file" class="form-control-file" name="image_profile_client">
+                                <img src="{{Storage::url($settings->image_profile_client)}}" alt="000000" class="img-thumbnail"
+                                     width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="image_profile_seller">{{trans('admin.image_profile_seller')}}</label>
+                                <input type="file" class="form-control-file" name="image_profile_seller">
+                                <img src="{{Storage::url($settings->image_profile_seller)}}" alt="000000" class="img-thumbnail"
+                                     width="100px" height="100px">
                             </div>
 
                             <div class="form-group">

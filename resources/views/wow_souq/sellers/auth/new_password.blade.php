@@ -6,7 +6,7 @@
     @include('flash::message')
     @include('partials.validations_errors')
     <section class="home_banner_area mb-40"
-             style="background-image: url('{{Storage::url(settings()->image_login_client)}}'); margin-bottom: 0;background-size: cover">
+             style="background-image: url('{{Storage::url(settings()->image_login_seller)}}'); margin-bottom: 0;background-size: cover">
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
                 <div class="border border-dark"
@@ -16,7 +16,7 @@
                         <h2 style="color: #ffffff;margin-right: 30px">{{trans('web.new_password')}}</h2>
                     </div>
 
-                    <form method="post" action="{{ route('wowsouq.client.reset.password') }}">
+                    <form method="post" action="{{ route('wowsouq.seller.reset.password') }}">
                         {!! csrf_field() !!}
 
                         <div class="banner_content row">
@@ -73,12 +73,12 @@
                         <div class="col-lg-12" style="margin-top: 20px;font-size: 17px">
                             <button type="submit"
                                     class="genric-btn danger circle">{{trans('web.submit')}}</button>
-                            <a href="{{url('client/reset/code')}}" class="genric-btn primary-border circle"
+                            <a href="{{url('seller/reset/code')}}" class="genric-btn primary-border circle"
                                style="margin-left: 10px;"
-                               data-toggle="modal" data-target="#resetCodeClient">{{trans('web.reset_code')}}</a>
+                               data-toggle="modal" data-target="#resetCodeSeller">{{trans('web.reset_code')}}</a>
                         </div>
                         <div class="col-lg-3" style="margin-top: 20px;font-size: large">
-                            <a href="{{url('client/login')}}" class="genric-btn primary circle"
+                            <a href="{{url('seller/login')}}" class="genric-btn primary circle"
                                style="width: 300px;margin-left: 15px">{{trans('web.login')}}</a>
                         </div>
                     </form>
@@ -91,7 +91,7 @@
 
 
     <!-- Modal -->
-    <div id="resetCodeClient" class="modal fade" role="dialog">
+    <div id="resetCodeSeller" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -99,7 +99,7 @@
                 <div class="modal-header">
                     <h4>{{trans('web.resetCode')}}</h4>
                 </div>
-                <form method="post" action="{{ route('wowsouq.client.reset.code') }}">
+                <form method="post" action="{{ route('wowsouq.seller.reset.code') }}">
                     {!! csrf_field() !!}
 
                     <div class="modal-body">

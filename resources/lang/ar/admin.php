@@ -276,5 +276,10 @@ return [
     'image_wow_souq' => 'صوره الصفحه الرئيسيه 1',
     'image_register_client' => 'صوره الصفحه الخاصه بتسجيل الزبائن',
     'image_login_client' => 'صوره الصفحه الخاصه بتسجيل الدخول للزبائن',
+    'wow_souq' => 'واو سوق',
+    'remember_me' => 'تزكرنى',
+    'Sign In' => 'تسجيل الدخول',
+    'I forgot my password' => 'هل نسيت كلمة المرور ؟',
+    'setting' => 'الاعدادات',
 
 ];

@@ -149,4 +149,10 @@ return [
     'image_wow_souq' => 'Home page image 1',
     'image_register_client' => 'Image of the clients registration page',
     'image_login_client' => 'Image of the clients login page',
+    'wow_souq' => 'Wow Souq',
+    'remember_me' => 'Remember Me',
+    'Sign In' => 'Sign In',
+    'I forgot my password' => 'I forgot my password',
+    'settings' => 'Settings',
+    'setting' => 'Setting',
 ];

@@ -13,7 +13,8 @@ use App\Http\Controllers\Controller;
 class GeneralController extends Controller
 {
     //
-    public function wow_souq()
+
+    public function index()
     {
         $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
         $top_product = Product::withCount(['orders'])->orderBy('orders_count', 'desc')->limit(4)->get();
@@ -47,4 +48,12 @@ class GeneralController extends Controller
 
         return view('wow_souq/products/product', compact('top_products', 'categories', 'product'));
     }
+
+//    public function check()
+//    {
+//        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
+//        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
+//
+//        return view('wow_souq/check', compact('top_products', 'categories'));
+//    }
 }

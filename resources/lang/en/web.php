@@ -2,6 +2,7 @@
 return [
 
     'wow_souq' => 'Wow Souq',
+    'Selling on Wow Souq' => 'Selling on Wow Souq',
     'I forgot my password' => 'I forgot my password',
     'login' => 'Login',
     'email' => 'E-Mail Address',

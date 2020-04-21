@@ -8,6 +8,7 @@
     <link rel="icon" href="{{asset('wow_souq/img/logo.png')}}" type="image/png"/>
     <title>{{trans('web.wow_souq')}}</title>
     <!-- Bootstrap CSS -->
+
     <link rel="stylesheet" href="{{asset('wow_souq/css/bootstrap.css')}}"/>
     <link rel="stylesheet" href="{{asset('wow_souq/vendors/linericon/style.css')}}"/>
     <link rel="stylesheet" href="{{asset('wow_souq/css/font-awesome.min.css')}}"/>
@@ -30,23 +31,12 @@
     <div class="top_menu">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5">
-                    <div class="float-left">
-                        <p>Phone: +01 256 25 235</p>
-                        <p>email: wow@souq.com</p>
-                    </div>
-                </div>
-                <div class="col-lg-7">
+                <div class="">
                     <div class="float-right">
                         <ul class="right_side">
                             <li>
-                                <a href="{{asset('wow_souq')}}/cart.html">
-                                    gift card
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{asset('wow_souq')}}/tracking.html">
-                                    track order
+                                <a href="{{url('/seller/register')}}">
+                                    {{trans('web.Selling on Wow Souq')}}
                                 </a>
                             </li>
                             <li>
@@ -57,7 +47,7 @@
                             @if (auth('clients')->user() == null)
                                 <li>
                                     <a href="{{url('client/login')}}">
-                                        login
+                                        {{trans('web.login_client')}}
                                     </a>
                                 </li>
                             @else
@@ -65,9 +55,27 @@
                                     <a href="{{ route('wowsouq.client.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        Logout
+                                        {{trans('web.logout_client')}}
                                     </a>
                                     <form id="logout-form" action="{{ route('wowsouq.client.logout') }}" method="POST">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            @endif
+                            @if (auth('sellers')->user() == null)
+                                <li>
+                                    <a href="{{url('seller/login')}}">
+                                        {{trans('web.login_seller')}}
+                                    </a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ route('wowsouq.seller.logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{trans('web.logout_seller')}}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('wowsouq.seller.logout') }}" method="POST">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
@@ -107,7 +115,8 @@
                                     <ul class="dropdown-menu">
                                         @foreach($top_products as $top_product)
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{url('product', $top_product->id)}}">{{$top_product->name}}</a>
+                                                <a class="nav-link"
+                                                   href="{{url('product', $top_product->id)}}">{{$top_product->name}}</a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -151,30 +160,54 @@
                                     </a>
                                 </li>
 
-{{--                                <li class="nav-item">--}}
-{{--                                    <a href="{{asset('wow_souq')}}/#" class="icons">--}}
-{{--                                        <i class="ti-shopping-cart"></i>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-
-                                <li class="nav-item">
-                                    <a href="{{ route('client.shoppingCart') }}" class="icons">
-                                        <i class="ti-shopping-cart"></i>
-                                        <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{asset('wow_souq')}}/#" class="icons">
-                                        <i class="ti-user" aria-hidden="true"></i>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{asset('wow_souq')}}/#" class="icons">
-                                        <i class="ti-heart" aria-hidden="true"></i>
-                                    </a>
-                                </li>
+                                {{--                                <li class="nav-item">--}}
+                                {{--                                    <a href="{{asset('wow_souq')}}/#" class="icons">--}}
+                                {{--                                        <i class="ti-shopping-cart"></i>--}}
+                                {{--                                    </a>--}}
+                                {{--                                </li>--}}
+                                @if (auth('clients')->user() != null)
+                                    <li class="nav-item">
+                                        <a href="{{ route('client.shoppingCart') }}" class="icons">
+                                            <i class="ti-shopping-cart"></i>
+                                            <span
+                                                class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (auth('clients')->user() != null && auth('sellers')->user() != null)
+                                    <li class="nav-item">
+                                        <a class="icons" data-toggle="modal" data-target="#profile">
+                                            <i class="ti-user" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                @elseif (auth('clients')->user() != null && auth('sellers')->user() == null)
+                                    <li class="nav-item">
+                                        <a href="{{asset('wow_souq')}}/#" class="icons">
+                                            <i class="ti-user" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                @elseif (auth('sellers')->user() != null && auth('clients')->user() == null)
+                                    <li class="nav-item">
+                                        <a href="{{url('seller/profile')}}" class="icons">
+                                            <i class="ti-user" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (auth('clients')->user() != null)
+                                    <li class="nav-item">
+                                        <a href="{{url('client/like')}}" class="icons">
+                                            <i class="ti-heart" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (auth('sellers')->user() != null)
+                                    <li class="nav-item">
+                                        <a href="{{url('seller/product/create')}}" style="font-size: 28px"
+                                           class="icons">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -184,6 +217,29 @@
     </div>
 </header>
 <!--================Header Menu Area =================-->
+
+
+<!-- Modal profile -->
+<div id="profile" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ trans('web.profile') }}</h4>
+            </div>
+            <div class="modal-body" style="font-size: 20px">
+                <a href="{{url('client/profile')}}"
+                   class="genric-btn primary circle">{{trans('web.clientProfileEdit')}}</a>
+                <a href="{{url('seller/profile')}}" class="genric-btn info circle"
+                   style="margin-left: 25px">{{trans('web.sellerProfileEdit')}}</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">{{ trans('admin.no') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal profile -->
+
 
 <div>
     @yield('wow_souq')
@@ -284,6 +340,16 @@
 <script src="{{asset('wow_souq')}}/vendors/counter-up/jquery.counterup.js"></script>
 <script src="{{asset('wow_souq')}}/js/mail-script.js"></script>
 <script src="{{asset('wow_souq')}}/js/theme.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.select22').select2();
+    });
+</script>
+
+
 </body>
 
 </html>

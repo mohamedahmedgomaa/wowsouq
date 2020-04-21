@@ -86,7 +86,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['namespace' => 'WowSouq'], function () {
 
-    Route::get('/', 'GeneralController@wow_souq')->name('index');
+    Route::get('/', 'GeneralController@index')->name('index');
+//    Route::get('/', 'GeneralController@check')->name('check');
     Route::get('/contact', 'GeneralController@contact')->name('contact');
     Route::post('/contact', 'GeneralController@contacts')->name('contacts');
 
@@ -106,7 +107,7 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
         Route::get('/forget/password', 'AuthController@getForgetPassword')->name('wowsouq.client.get.forget.password');
         Route::post('/forget/password', 'AuthController@forgetPassword')->name('wowsouq.client.forget.password');
-        Route::post('/reset/code', 'AuthController@forgetPassword')->name('wowsouq.client.reset.code');
+        Route::post('/reset/code', 'AuthController@resetCode')->name('wowsouq.client.reset.code');
 
         Route::get('/reset/password', 'AuthController@getResetPassword')->name('wowsouq.client.get.reset.password');
         Route::post('/reset/password', 'AuthController@resetPassword')->name('wowsouq.client.reset.password');
@@ -118,6 +119,9 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
         Route::group(['middleware' => ['auth:clients']], function () {
 
+            Route::get('/profile', 'MainController@getProfile')->name('wowsouq.client.get.profile');
+            Route::post('/profile', 'MainController@profile')->name('wowsouq.client.profile');
+
         });
 
     });
@@ -125,11 +129,35 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
     Route::group(['namespace' => 'Seller', 'prefix' => 'seller'], function () {
 
+        Route::get('/login', 'AuthController@getLogin')->name('wowsouq.seller.get_login');
+        Route::post('/login', 'AuthController@login')->name('wowsouq.seller.login');
+
+        Route::get('/register', 'AuthController@getRegister')->name('wowsouq.seller.get_register');
+        Route::post('/register', 'AuthController@register')->name('wowsouq.seller.register');
+
+        Route::get('/logout', 'AuthController@logout')->name('wowsouq.seller.logout');
+        Route::post('/logout', 'AuthController@logout')->name('wowsouq.seller.logout');
+
+        Route::get('/forget/password', 'AuthController@getForgetPassword')->name('wowsouq.seller.get.forget.password');
+        Route::post('/forget/password', 'AuthController@forgetPassword')->name('wowsouq.seller.forget.password');
+        Route::post('/reset/code', 'AuthController@resetCode')->name('wowsouq.seller.reset.code');
+
+        Route::get('/reset/password', 'AuthController@getResetPassword')->name('wowsouq.seller.get.reset.password');
+        Route::post('/reset/password', 'AuthController@resetPassword')->name('wowsouq.seller.reset.password');
 
         Route::group(['middleware' => ['auth:sellers']], function () {
 
+            Route::get('/', 'MainController@index')->name('wowsouq.seller.index');
+            Route::get('/profile', 'MainController@getProfile')->name('wowsouq.seller.get.profile');
+            Route::post('/profile', 'MainController@profile')->name('wowsouq.seller.profile');
+
+            Route::group(['prefix' => 'product'], function () {
+
+                Route::get('/create', 'ProductController@create')->name('wowsouq.seller.product.create');
+                Route::post('/create', 'ProductController@store')->name('wowsouq.seller.product.store');
+
+            });
+
         });
-
     });
-
 });
