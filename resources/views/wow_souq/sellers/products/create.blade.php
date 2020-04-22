@@ -8,7 +8,7 @@
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
                 <div class="border border-dark"
-                     style="margin-top: 50px;margin-bottom: 50px;margin-left: 50px;padding-top: 30px;padding-bottom: 40px;padding-left: 50px;width: 450px;background-color: rgba(0,0,0,0.5);border-radius: 20px">
+                     style="margin-top: 50px;margin-bottom: 50px;margin-left: 33%;padding-top: 30px;padding-bottom: 40px;padding-left: 50px;width: 450px;background-color: rgba(0,0,0,0.7);border-radius: 20px">
 
                     <div class="text-center" style="margin: 0">
                         <h2 style="color: #ffffff;margin-right: 30px">{{trans('web.productCreate')}}</h2>

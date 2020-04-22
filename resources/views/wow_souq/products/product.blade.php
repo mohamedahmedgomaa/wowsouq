@@ -69,7 +69,10 @@
                 <div class="col-lg-5 offset-lg-1">
                     <div class="s_product_text">
                         <h3>{{$product->name}}</h3>
-                        <h2>${{$product->price}}</h2>
+                        <h2>{{$product->price}} {{trans('web.EGP')}}</h2>
+                        @if ($product->offer != null)
+                            <del>{{$product->offer}} {{trans('web.EGP')}}</del>
+                        @endif
                         <ul class="list">
                             <li>
                                 @if (session('lang') === 'en')

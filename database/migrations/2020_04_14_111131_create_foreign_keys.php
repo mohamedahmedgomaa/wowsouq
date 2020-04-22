@@ -29,11 +29,6 @@ class CreateForeignKeys extends Migration {
                 ->onUpdate('set null');
         });
 		Schema::table('orders', function(Blueprint $table) {
-			$table->foreign('seller_id')->references('id')->on('sellers')
-						->onDelete('set null')
-						->onUpdate('set null');
-		});
-		Schema::table('orders', function(Blueprint $table) {
 			$table->foreign('client_id')->references('id')->on('clients')
 						->onDelete('set null')
 						->onUpdate('set null');
@@ -79,9 +74,6 @@ class CreateForeignKeys extends Migration {
         Schema::table('likes', function(Blueprint $table) {
             $table->dropForeign('likes_client_id_foreign');
         });
-		Schema::table('orders', function(Blueprint $table) {
-			$table->dropForeign('orders_seller_id_foreign');
-		});
 		Schema::table('orders', function(Blueprint $table) {
 			$table->dropForeign('orders_client_id_foreign');
 		});

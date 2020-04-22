@@ -92,18 +92,17 @@
                             <img class="img-fluid w-100" style="width: 100%;height: 300px;"
                                  src="{{Storage::url($product->image)}}" alt=""/>
                             <div class="p_icon">
-                                <a href="#">
+                                <a href="{{url('product',$product->id)}}">
                                     <i class="ti-eye"></i>
                                 </a>
-                                <a href="#">
+                                <a href="#" class="like">
                                     <i class="ti-heart"></i>
                                 </a>
+
                                 <a href="{{ route('client.getAddToCart', ['id' => $product->id]) }}">
                                     <i class="ti-shopping-cart"></i>
                                 </a>
-{{--                                <a href="#">--}}
-{{--                                    <i class="ti-shopping-cart"></i>--}}
-{{--                                </a>--}}
+
                             </div>
                         </div>
                         <div class="product-btm">
@@ -111,8 +110,10 @@
                                 <h4>{{$product->name}}</h4>
                             </a>
                             <div class="mt-3">
-                                <span class="mr-4">${{$product->price}}</span>
-                                <del>${{$product->offer}}</del>
+                                <span class="mr-4">{{$product->price}} {{trans('web.EGP')}}</span>
+                                @if ($product->offer != null)
+                                    <del>{{$product->offer}} {{trans('web.EGP')}}</del>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -124,22 +125,22 @@
     </section>
     <!--================ End Feature Product Area =================-->
 
-    <!--================ Offer Area =================-->
-    <section class="offer_area">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="offset-lg-4 col-lg-6 text-center">
-                    <div class="offer_content">
-                        <h3 class="text-uppercase mb-40">all men’s collection</h3>
-                        <h2 class="text-uppercase">50% off</h2>
-                        <a href="#" class="main_btn mb-20 mt-5">Discover Now</a>
-                        <p>Limited Time Offer</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--================ End Offer Area =================-->
+{{--    <!--================ Offer Area =================-->--}}
+{{--    <section class="offer_area">--}}
+{{--        <div class="container">--}}
+{{--            <div class="row justify-content-center">--}}
+{{--                <div class="offset-lg-4 col-lg-6 text-center">--}}
+{{--                    <div class="offer_content">--}}
+{{--                        <h3 class="text-uppercase mb-40">all men’s collection</h3>--}}
+{{--                        <h2 class="text-uppercase">50% off</h2>--}}
+{{--                        <a href="#" class="main_btn mb-20 mt-5">Discover Now</a>--}}
+{{--                        <p>Limited Time Offer</p>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
+{{--    <!--================ End Offer Area =================-->--}}
 
     <!--================ New Product Area =================-->
     <section class="new_product_area section_gap_top section_gap_bottom_custom">

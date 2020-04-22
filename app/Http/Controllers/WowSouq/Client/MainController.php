@@ -6,11 +6,14 @@ use App\Model\Cart;
 use App\Model\Category;
 use App\Model\Client;
 use App\Model\Like;
+use App\Model\PaymentMethod;
 use App\Model\Product;
 use App\Model\Seller;
 use App\Model\Token;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -112,18 +115,20 @@ class MainController extends Controller
         if (!Session::has('cart')) {
             $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
             $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
-
-            return view('wow_souq.client.order.cart', compact('categories', 'top_products'));
+            $payment_method = PaymentMethod::all();
+            return view('wow_souq.client.order.cart', compact('categories', 'top_products', 'payment_method'));
         }
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
         $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
         $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
+        $payment_method = PaymentMethod::all();
         return view('wow_souq.client.order.cart', [
             'products' => $cart->items,
             'totalPrice' => $cart->totalPrice,
             'top_products' => $top_products,
-            'categories' => $categories
+            'categories' => $categories,
+            'payment_method' => $payment_method
         ]);
 
     }
@@ -160,41 +165,46 @@ class MainController extends Controller
     public function addOrder(Request $request)
     {
         $this->validate($request, [
+            'note' => 'required',
             'address' => 'required',
             'payment_method_id' => 'required',
         ]);
-        $client =  auth()->guard('client')->user();
+        $client =  auth()->guard('clients')->user();
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $products = new Cart($oldCart);
 
-        $seller = Seller::find(session('seller_id'));
 
-        if($seller)
-        {
             $order = $client->orders()->create($request->all());
             $order->update(
                 [
-                    'seller_id' => $seller->id ,
+                    'order_number' => rand(11111111, 99999999),
                     'price' => $products->totalPrice,
-                    'delivery' => $seller->delivery,
-                    'total' => $products->totalPrice + $seller->delivery
+                    'delivery' => settings()->delivery,
+                    'total' => $products->totalPrice + settings()->delivery
                 ]
             );
             foreach ($products->items as $product)
             {
                 $order->products()->attach($product['product_id'],
                     [
+                        'note' =>$request->note,
                         'qty' =>$product['qty'] ,
                         'price' =>$product['price']
                     ]);
             }
             session()->forget('cart');
-            session()->forget('seller_id');
 
-            flash()->success('تم اضافة االطلب بنجاح');
-            return redirect('/sofra');
-//            return view('front.clients.editShoppingCart', compact('order'));
-        }
+            flash()->success(trans('web.orderSuccessRequest'));
+            return redirect('/');
+
+    }
+
+    public function getLike()
+    {
+        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
+        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
+
+        return view('wow_souq.client.like', compact('top_products', 'categories'));
     }
 
 }

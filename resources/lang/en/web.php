@@ -17,5 +17,6 @@ return [
     'gender' => 'Gender',
     'male' => 'Male',
     'female' => 'Female',
+    'EGP' => ' EGP ',
 
 ];

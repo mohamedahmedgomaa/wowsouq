@@ -1,4 +1,32 @@
 @extends('wow_souq.layouts.app')
+{{--@inject('payment_method', 'App\Model\PaymentMethod')--}}
+
+@push('js')
+    <?php
+
+    $lat = !empty(old('lat')) ? old('lat'):'30.06303689611116';
+    $lng = !empty(old('lng')) ? old('lng'):'31.23264503479004';
+
+    ?>
+    <script>
+        $('#us1').locationpicker({
+            location: {
+                latitude: {{ $lat }},
+                longitude: {{ $lng }},
+            },
+            radius: 300,
+            markerIcon: "{{ url('design/adminlte/dist/img/map-marker-2-xl.png') }}",
+            inputBinding: {
+                latitudeInput: $('#lat'),
+                longitudeInput: $('#lng'),
+                // radiusInput: $('#us2-radius'),
+                locationNameInput: $('#address')
+            }
+
+        });
+    </script>
+@endpush
+
 
 @section('wow_souq')
 
@@ -148,8 +176,7 @@
                                 <td></td>
                                 <td>
                                     <div class="checkout_btn_inner">
-                                        <a class="gray_btn" href="#">Continue Shopping</a>
-                                        {{--                                    <a class="main_btn" href="{{route('client.remove',['id' => $product['item']['id']])}}">Proceed to checkout</a>--}}
+                                        <button class="btn gray_btn"  data-toggle="modal" data-target="#shopping_cart">Continue Shopping</button>
                                     </div>
                                 </td>
                             </tr>
@@ -167,47 +194,72 @@
     <!--================End Cart Area =================-->
 
 
-    {{--    @if(Session::has('cart'))--}}
-    {{--        <main class="cart" style="padding: 5rem 10rem;">--}}
-    {{--            <div class="media" id="order1">--}}
-    {{--                <h4> المبلغ الكلى : {{$totalPrice}} ريال</h4>--}}
-    {{--            </div>--}}
-    {{--            @foreach($products as $product)--}}
-    {{--                <div class="media" id="order1">--}}
-    {{--                    <img src="{{asset('')}}front/img/images/burger-cheeseburger-delicious-1624473.jpg" class="mr-3"--}}
-    {{--                         alt="...">--}}
-    {{--                    <div class="media-body">--}}
-    {{--                        <h5 class="mt-0">بيف برجر {{$product['item']['name']}} جرام</h5>--}}
-    {{--                        <h5 class="mt-0">{{$product['item']['price']}} ريال</h5>--}}
-    {{--                        <h5 class="mt-0">البائع : {{$product['item']['restaurant']['name']}}</h5>--}}
-    {{--                        <h5 class="mt-0">الكمية : <span--}}
-    {{--                                style="width: 3rem;background-color:#c9c9c9;border: unset">{{$product['qty']}}</span>--}}
-    {{--                        </h5>--}}
-    {{--                        <button type="button" class="btn btn-primary btn-lg" id="deleteOrder1">--}}
-    {{--                            <i class="far fa-times-circle" style="font-size: 1.5rem;"></i>--}}
-    {{--                            <a style="display: inline" class="h4"--}}
-    {{--                               href="{{route('client.reduceByOne',['id' => $product['item']['id']])}}">مسح منتج واحد</a>--}}
-    {{--                        </button>--}}
-    {{--                        <button type="button" class="btn btn-primary btn-lg" id="deleteOrder1">--}}
-    {{--                            <i class="far fa-times-circle" style="font-size: 1.5rem;"></i>--}}
-    {{--                            <a style="display: inline" class="h4"--}}
-    {{--                               href="{{route('client.remove',['id' => $product['item']['id']])}}">مسح</a>--}}
-    {{--                        </button>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            @endforeach--}}
+    <!-- Modal -->
+    <div id="shopping_cart" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
 
-    {{--            <button type="button" class="btn btn-primary btn-lg" id="deleteOrder1">--}}
-    {{--                <i class="fa fa-shopping-cart" style="font-size: 2rem;"></i>--}}
-    {{--                <a style="display: inline" class="h4"--}}
-    {{--                   href="{{url('/client/checkout')}}">شراء</a>--}}
-    {{--            </button>--}}
-    {{--        </main>--}}
-    {{--    @else--}}
-    {{--        <div class="alert alert-danger text-center">--}}
-    {{--            <h3>لا توجد منتجات</h3>--}}
-    {{--        </div>--}}
-    {{--    @endif--}}
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ trans('admin.Config Request') }}</h4>
+                </div>
+                {!! Form::open(['route'=>'wowsouq.client.add.order', 'method'=>'POST']) !!}
+                <div class="modal-body">
+
+                    <input type="hidden" value="{{ $lat }}" id="lat" name="latitude">
+                    <input type="hidden" value="{{ $lng }}" id="lng" name="longitude">
+
+
+                    <style>
+                        .nice-select {
+                            width: 100%;
+                        }
+                        .nice-select .option {
+                            width: 750px;
+                        }
+                    </style>
+
+                    <div class="banner_content row" style="margin-bottom: 20px">
+                        <div class="col-lg-12">
+                            <div>
+                                <label for="payment_method_id" style=""
+                                       class="col-form-label">{{trans('web.payment_method_id')}}</label>
+                            </div>
+                            <select name="payment_method_id" id="payment_method_id" required>
+                                <option value="0">{{trans('web.no_data')}}</option>
+                                @foreach($payment_method as $index)
+                                    <option value="{{$index->id}}">{{$index->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="note">{{trans('admin.note')}}</label>
+                        {!! Form::textarea('note', null , ['class' => 'form-control', 'rows' => 4]) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('address', trans('admin.address')) !!}
+                        {!! Form::text('address', old('address'), ['class'=>'form-control address']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        <div id="us1" style="width: 100%; height: 200px;"></div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ trans('admin.no') }}</button>
+                    {!! Form::submit(trans('admin.submit'), ['class'=>'btn btn-info']) !!}
+                </div>
+                {!! Form::close() !!}
+            </div>
+
+        </div>
+    </div>
 
 
 @endsection

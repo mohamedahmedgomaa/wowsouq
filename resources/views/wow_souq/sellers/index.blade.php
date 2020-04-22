@@ -24,8 +24,8 @@
                                     <a href="#">
                                         <i class="ti-eye"></i>
                                     </a>
-                                    <a>
-                                        <i class="fa fa-edit"></i>
+                                    <a href="{{url('seller/product/edit', $product->id)}}">
+                                        <i class="ti fa fa-edit"></i>
                                     </a>
                                 </div>
                             </div>
@@ -34,8 +34,10 @@
                                     <h4>{{$product->name}}</h4>
                                 </a>
                                 <div class="mt-3">
-                                    <span class="mr-4">${{$product->price}}</span>
-                                    <del>${{$product->offer}}</del>
+                                    <span class="mr-4">{{$product->price}} {{trans('web.EGP')}}</span>
+                                    @if ($product->offer != null)
+                                        <del>{{$product->offer}} {{trans('web.EGP')}}</del>
+                                    @endif
                                 </div>
                             </div>
                         </div>

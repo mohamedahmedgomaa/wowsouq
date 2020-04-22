@@ -10,16 +10,17 @@ class CreateOrdersTable extends Migration {
 		Schema::create('orders', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('order_number');
-			$table->longText('note');
-			$table->enum('status', array('pending','accepted','rejected','delivered','declined'));
-			$table->integer('seller_id')->unsigned()->nullable();
+			$table->string('order_number')->nullable();
+			$table->longText('note')->nullable();
+			$table->enum('status', array('pending','accepted','rejected','delivered','declined'))->nullable();
 			$table->integer('client_id')->unsigned()->nullable();
-			$table->decimal('price');
-			$table->decimal('delivery');
-			$table->decimal('commission');
-			$table->decimal('total');
-			$table->string('address');
+			$table->decimal('price')->nullable();
+			$table->decimal('delivery')->nullable();
+			$table->decimal('commission')->nullable();
+			$table->decimal('total')->nullable();
+			$table->string('address')->nullable();
+            $table->decimal('longitude', 10,8)->nullable();
+            $table->decimal('latitude', 10,8)->nullable();
 			$table->integer('payment_method_id')->unsigned();
 			$table->softDeletes();
 		});

@@ -24,6 +24,11 @@ class Client extends Authenticatable
         return $this->hasMany('App\Model\Comment');
     }
 
+    public function likes()
+    {
+        return $this->hasMany('App\Model\Like');
+    }
+
     public function orders()
     {
         return $this->hasMany('App\Model\Order');

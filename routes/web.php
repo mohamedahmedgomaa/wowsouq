@@ -87,12 +87,15 @@ Route::group(['prefix' => 'admin'], function () {
 Route::group(['namespace' => 'WowSouq'], function () {
 
     Route::get('/', 'GeneralController@index')->name('index');
-//    Route::get('/', 'GeneralController@check')->name('check');
+    Route::get('/search', 'GeneralController@search')->name('search');
     Route::get('/contact', 'GeneralController@contact')->name('contact');
     Route::post('/contact', 'GeneralController@contacts')->name('contacts');
+    Route::get('/category/{id}', 'GeneralController@category')->name('category');
 
     // Product
     Route::get('/product/{id}', 'GeneralController@product')->name('product');
+    Route::get('/products/all', 'GeneralController@productAll')->name('productAll');
+    Route::get('/products/top', 'GeneralController@productTop')->name('productTop');
 
     Route::group(['namespace' => 'Client', 'prefix' => 'client'], function () {
 
@@ -122,6 +125,8 @@ Route::group(['namespace' => 'WowSouq'], function () {
             Route::get('/profile', 'MainController@getProfile')->name('wowsouq.client.get.profile');
             Route::post('/profile', 'MainController@profile')->name('wowsouq.client.profile');
 
+            Route::get('/like', 'MainController@getLike')->name('wowsouq.client.get.like');
+            Route::post('add-order', 'MainController@addOrder')->name('wowsouq.client.add.order');
         });
 
     });
@@ -155,6 +160,9 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
                 Route::get('/create', 'ProductController@create')->name('wowsouq.seller.product.create');
                 Route::post('/create', 'ProductController@store')->name('wowsouq.seller.product.store');
+
+                Route::get('/edit/{id}', 'ProductController@edit')->name('wowsouq.seller.product.edit');
+                Route::post('/update/{id}', 'ProductController@update')->name('wowsouq.seller.product.update');
 
             });
 
