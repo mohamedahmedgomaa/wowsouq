@@ -4,12 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Review extends Model
 {
-
-    protected $table = 'comments';
+    //
+    protected $table = 'reviews';
     public $timestamps = true;
-    protected $fillable = array('comment', 'product_id', 'client_id');
+    protected $fillable = array('review', 'rate', 'client_id', 'product_id');
 
     public function client()
     {
@@ -20,5 +20,4 @@ class Comment extends Model
     {
         return $this->belongsTo('App\Model\Product');
     }
-
 }

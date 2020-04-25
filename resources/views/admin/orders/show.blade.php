@@ -39,16 +39,7 @@
                                 : {{$order->client->address}}
                             </address>
                         </div><!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            {{trans('admin.seller')}} :
-                            <address>
-                                <strong> {{$order->seller->name}}</strong><br>
-                                 {{trans('admin.email')}}
-                                : {{$order->seller->email}}<br>
-                                {{trans('admin.phone')}}
-                                : {{$order->seller->phone}}
-                            </address>
-                        </div><!-- /.col -->
+
                         <div class="col-sm-4 invoice-col">
                             <b>{{trans('admin.order_id')}} : {{$order->id}}</b><br>
                             <b>{{trans('admin.note')}} : {{$order->note}} </b><br>

@@ -12,7 +12,7 @@ class CreateOrdersTable extends Migration {
 			$table->timestamps();
 			$table->string('order_number')->nullable();
 			$table->longText('note')->nullable();
-			$table->enum('status', array('pending','accepted','rejected','delivered','declined'))->nullable();
+			$table->enum('status', array('pending','accepted','rejected','delivered','declined'))->default('pending')->nullable();
 			$table->integer('client_id')->unsigned()->nullable();
 			$table->decimal('price')->nullable();
 			$table->decimal('delivery')->nullable();

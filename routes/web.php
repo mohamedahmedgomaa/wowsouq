@@ -96,6 +96,7 @@ Route::group(['namespace' => 'WowSouq'], function () {
     Route::get('/product/{id}', 'GeneralController@product')->name('product');
     Route::get('/products/all', 'GeneralController@productAll')->name('productAll');
     Route::get('/products/top', 'GeneralController@productTop')->name('productTop');
+    Route::get('/products/offer', 'GeneralController@productOffer')->name('productOffer');
 
     Route::group(['namespace' => 'Client', 'prefix' => 'client'], function () {
 
@@ -124,9 +125,14 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
             Route::get('/profile', 'MainController@getProfile')->name('wowsouq.client.get.profile');
             Route::post('/profile', 'MainController@profile')->name('wowsouq.client.profile');
-
+            Route::post('/like', 'MainController@postLikePost')->name('like');
             Route::get('/like', 'MainController@getLike')->name('wowsouq.client.get.like');
             Route::post('add-order', 'MainController@addOrder')->name('wowsouq.client.add.order');
+            Route::post('comments/{id}', 'MainController@comment')->name('wowsouq.client.comments');
+            Route::post('reviews/{id}', 'MainController@review')->name('wowsouq.client.reviews');
+            Route::get('/my-order', 'MainController@myOrder')->name('wowsouq.seller.get.order');
+            Route::delete('/order/rejected/{id}', 'MainController@orderRejected')->name('wowsouq.client.order.rejected');
+
         });
 
     });
@@ -155,6 +161,7 @@ Route::group(['namespace' => 'WowSouq'], function () {
             Route::get('/', 'MainController@index')->name('wowsouq.seller.index');
             Route::get('/profile', 'MainController@getProfile')->name('wowsouq.seller.get.profile');
             Route::post('/profile', 'MainController@profile')->name('wowsouq.seller.profile');
+            Route::get('/my-order', 'MainController@myOrder')->name('wowsouq.seller.get.order');
 
             Route::group(['prefix' => 'product'], function () {
 
@@ -163,6 +170,8 @@ Route::group(['namespace' => 'WowSouq'], function () {
 
                 Route::get('/edit/{id}', 'ProductController@edit')->name('wowsouq.seller.product.edit');
                 Route::post('/update/{id}', 'ProductController@update')->name('wowsouq.seller.product.update');
+                Route::delete('/delete/{id}', 'ProductController@delete')->name('wowsouq.seller.product.delete');
+                Route::get('/delete/{id}', 'ProductController@delete')->name('wowsouq.seller.product.delete');
 
             });
 

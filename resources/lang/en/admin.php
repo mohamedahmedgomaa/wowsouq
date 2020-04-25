@@ -155,4 +155,5 @@ return [
     'I forgot my password' => 'I forgot my password',
     'settings' => 'Settings',
     'setting' => 'Setting',
+    'cancel_this' => 'Do you agree to cancel this request  :name ? ',
 ];

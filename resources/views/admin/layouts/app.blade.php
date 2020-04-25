@@ -425,7 +425,8 @@
 {{--<script src="{{ asset('js/helper.js') }}"></script>--}}
 <script src="{{ url('/design/adminlte/dist/js/myfunctions.js') }}"></script>
 
-<script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyBwxuW2cdXbL38w9dcPOXfGLmi1J7AVVB8'></script>
+<script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyD5oDYf7jtozt_v9spwZgTV4MD7rXY9Cto'></script>
+
 <script type="text/javascript" src="{{ url('design/adminlte/dist/js/locationpicker.jquery.js') }}"></script>
 
 @stack('scripts')

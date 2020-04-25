@@ -96,20 +96,6 @@
                             </div>
                         </div>
 
-
-                        <div class="banner_content row" style="margin-top: 10px">
-                            <div class="col-lg-10">
-                                <div class="mt-10">
-                                    <label style="color: #ffffff">{{trans('web.delivery')}}</label>
-                                    <input type="number" name="delivery" placeholder="{{trans('web.delivery')}}"
-                                           onfocus="this.placeholder = ''"
-                                           onblur="this.placeholder = '{{trans('web.delivery')}}'"
-                                           required class="single-input-accent">
-                                </div>
-                            </div>
-                        </div>
-
-
                         <div class="col-lg-10" style="margin-top: 30px;font-size: large;">
                             <button type="submit"
                                     class="genric-btn primary-border circle">{{trans('web.register')}}</button>

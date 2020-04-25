@@ -5,9 +5,12 @@ namespace App\Http\Controllers\WowSouq\Client;
 use App\Model\Cart;
 use App\Model\Category;
 use App\Model\Client;
+use App\Model\Comment;
 use App\Model\Like;
+use App\Model\Order;
 use App\Model\PaymentMethod;
 use App\Model\Product;
+use App\Model\Review;
 use App\Model\Seller;
 use App\Model\Token;
 use Illuminate\Http\Request;
@@ -207,4 +210,99 @@ class MainController extends Controller
         return view('wow_souq.client.like', compact('top_products', 'categories'));
     }
 
+
+    public function postLikePost(Request $request)
+    {
+        $post_id = $request['postId'];
+        $is_like = $request['isLike'] === 'true';
+        $update = false;
+        $post = Product::find($post_id);
+        dd($request['postId']);
+        if (!$post) {
+            return null;
+        }
+        $user = auth('clients')->user();
+        $like = $user->likes()->where('product_id', $post_id)->first();
+        dd( auth('clients')->user());
+        if ($like) {
+            $already_like = $like->like;
+            $update = true;
+            if ($already_like == $is_like) {
+                $like->delete();
+                return null;
+            }
+        } else {
+            $like = new Like();
+        }
+        $like->like = $is_like;
+        $like->client_id = $user->id;
+        $like->product_id = $post->id;
+        if ($update) {
+            $like->update();
+        } else {
+            $like->save();
+        }
+        return null;
+    }
+
+
+//    public function fav(Request $request)
+//    {
+//        $favourites = $request->user()->products()->toggle($request->product_id);
+//        return responseJson(1,'success',$favourites);
+//    }
+
+    public function comment(Request $request, $id)
+    {
+        $this->validate($request, [
+            'comment' => 'required',
+        ]);
+
+        $comment = Comment::create([
+           'comment' => $request->comment,
+           'product_id' => $id,
+           'client_id' => auth('clients')->user()->id,
+        ]);
+
+        flash()->success(trans('admin.createMessageSuccess'));
+        return redirect()->back();
+    }
+
+    public function review(Request $request, $id)
+    {
+        $this->validate($request, [
+            'rate' => 'required|in:1,2,3,4,5',
+            'review' => 'required',
+        ]);
+
+        $review = Review::create([
+            'rate' => $request->rate,
+            'review' => $request->review,
+           'product_id' => $id,
+           'client_id' => auth('clients')->user()->id,
+        ]);
+
+        flash()->success(trans('admin.createMessageSuccess'));
+        return redirect()->back();
+    }
+
+
+    public function myOrder()
+    {
+        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
+        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
+
+        return view('wow_souq.client.order', compact('top_products', 'categories'));
+    }
+
+    public function orderRejected(Request $request, $id)
+    {
+        $order_rejected = Order::findOrFail($id);
+
+        $order_rejected->status = 'rejected';
+        $order_rejected->save();
+
+        flash()->success(trans('admin.deleted_record'));
+        return redirect()->back();
+    }
 }

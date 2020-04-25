@@ -4,8 +4,8 @@
 @push('js')
     <?php
 
-    $lat = !empty(old('lat')) ? old('lat'):'30.06303689611116';
-    $lng = !empty(old('lng')) ? old('lng'):'31.23264503479004';
+    $lat = !empty(old('lat')) ? old('lat') : '30.06303689611116';
+    $lng = !empty(old('lng')) ? old('lng') : '31.23264503479004';
 
     ?>
     <script>
@@ -30,22 +30,21 @@
 
 @section('wow_souq')
 
-
-
     <!--================Home Banner Area =================-->
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
+                @include('partials.validations_errors')
+                @include('flash::message')
                 <div
                     class="banner_content d-md-flex justify-content-between align-items-center"
                 >
                     <div class="mb-3 mb-md-0">
                         <h2>Cart</h2>
-                        <p>Very us move be blessed multiply night</p>
                     </div>
                     <div class="page_link">
-                        <a href="index.html">Home</a>
-                        <a href="cart.html">Cart</a>
+                        <a href="{{url('/')}}">Home</a>
+                        <a href="#">Cart</a>
                     </div>
                 </div>
             </div>
@@ -130,9 +129,9 @@
                                         </div>
                                     </td>
                                     <td>
-{{--                                        <a class="gray_btn"--}}
-{{--                                           href="{{route('client.reduceByOne',['id' => $product['item']['id']])}}">Remove--}}
-{{--                                            One</a>--}}
+                                        {{--                                        <a class="gray_btn"--}}
+                                        {{--                                           href="{{route('client.reduceByOne',['id' => $product['item']['id']])}}">Remove--}}
+                                        {{--                                            One</a>--}}
                                         <a class="main_btn"
                                            href="{{route('client.remove',['id' => $product['item']['id']])}}">Remove
                                             All</a>
@@ -176,7 +175,9 @@
                                 <td></td>
                                 <td>
                                     <div class="checkout_btn_inner">
-                                        <button class="btn gray_btn"  data-toggle="modal" data-target="#shopping_cart">Continue Shopping</button>
+                                        <button class="btn gray_btn" data-toggle="modal" data-target="#shopping_cart">
+                                            Continue Shopping
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -214,6 +215,7 @@
                         .nice-select {
                             width: 100%;
                         }
+
                         .nice-select .option {
                             width: 750px;
                         }

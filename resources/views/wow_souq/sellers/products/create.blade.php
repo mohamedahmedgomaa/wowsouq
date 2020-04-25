@@ -33,7 +33,7 @@
                                         <label for="category_id" style="color: #ffffff"
                                                class="col-form-label">{{trans('web.category')}}</label>
                                     </div>
-                                    <select name="category_id" id="category_id" required style="width: 100%">
+                                    <select name="category_id" id="category_id" style="width: 100%">
                                         <option value="0">{{trans('web.no_data')}}</option>
                                         @foreach($category as $index)
                                             <option value="{{$index->id}}">{{$index->name_en}}</option>
@@ -49,7 +49,7 @@
                                     <input type="text" name="name" placeholder="{{trans('web.name')}}"
                                            onfocus="this.placeholder = ''"
                                            onblur="this.placeholder = '{{trans('web.name')}}'"
-                                           required class="single-input-accent">
+                                           class="single-input-accent">
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                               placeholder="{{trans('web.description')}}"
                                               onfocus="this.placeholder = ''"
                                               onblur="this.placeholder = '{{trans('web.description')}}'"
-                                              required></textarea>
+                                              ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                                     <input type="text" name="price" placeholder="{{trans('web.price')}}"
                                            onfocus="this.placeholder = ''"
                                            onblur="this.placeholder = '{{trans('web.price')}}'"
-                                           required class="single-input-accent">
+                                           class="single-input-accent">
                                 </div>
                             </div>
                         </div>
@@ -108,12 +108,22 @@
                         <div class="banner_content row" style="margin-top: 10px">
                             <div class="col-lg-10">
                                 <div class="mt-10">
+                                    <label for="files" style="color: #ffffff">{{trans('web.files')}}</label>
+                                    <input type="file" multiple="multiple" style="color: #ffffff" class="form-control-file"
+                                           name="files[]">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="banner_content row" style="margin-top: 10px">
+                            <div class="col-lg-10">
+                                <div class="mt-10">
                                     <label style="color: #ffffff">{{trans('web.number_product')}}</label>
                                     <input type="number" name="number_product"
                                            placeholder="{{trans('web.number_product')}}"
                                            onfocus="this.placeholder = ''"
                                            onblur="this.placeholder = '{{trans('web.number_product')}}'"
-                                           required class="single-input-accent">
+                                           class="single-input-accent">
                                 </div>
                             </div>
                         </div>

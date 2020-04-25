@@ -36,7 +36,6 @@ class OrderDatatable extends DataTable
     public function query()
     {
         return Order::query()->with('products')
-                            ->with('seller')
                         ->with('client')
                     ->with('paymentMethod')
                 ->select('orders.*');
@@ -119,10 +118,6 @@ class OrderDatatable extends DataTable
                 'name'  => 'status',
                 'data'  => 'status',
                 'title' => trans('admin.status'),
-            ],[
-                'name'  => 'seller.name',
-                'data'  => 'seller.name',
-                'title' => trans('admin.seller'),
             ],[
                 'name'  => 'client.name',
                 'data'  => 'client.name',

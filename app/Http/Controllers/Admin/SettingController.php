@@ -22,6 +22,7 @@ class SettingController extends Controller
             'phone' => 'required',
             'email' => 'required',
             'text' => 'required',
+            'delivery' => 'required|numeric',
             'image' => v_image(),
             'image_login_client' => v_image(),
             'image_register_client' => v_image(),
@@ -130,6 +131,7 @@ class SettingController extends Controller
         $setting->phone = $request->phone;
         $setting->email = $request->email;
         $setting->text = $request->text;
+        $setting->delivery = $request->delivery;
         $setting->whats_app = $request->whats_app;
         $setting->instagram = $request->instagram;
         $setting->you_tube = $request->you_tube;

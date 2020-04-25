@@ -127,8 +127,7 @@ class ProductController extends Controller
             'number_product.required' => trans('validation.numberProductIsRequired'),
         ]);
 
-
-        if ($request->offer <= $request->price) {
+        if ($request['offer'] <= $request['price'] && $request['offer'] != null) {
             flash()->error(trans('admin.The offer price is smaller than or equal to the product price'));
             return redirect()->back();
         }

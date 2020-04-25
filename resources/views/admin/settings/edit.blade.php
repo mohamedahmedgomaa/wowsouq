@@ -41,10 +41,15 @@
 
 
                             <div class="form-group">
-                                <label for="image">{{trans('admin.image')}}</label>
+                                <label for="image">{{trans('admin.logo')}}</label>
                                 <input type="file" class="form-control-file" name="image">
                                 <img src="{{Storage::url($settings->image)}}" alt="000000" class="img-thumbnail"
                                      width="100px" height="100px">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="delivery">{{trans('admin.delivery')}}</label>
+                                <input type="text" class="form-control" name="delivery"  value="{{$settings->delivery}}">
                             </div>
 
                             <div class="form-group">

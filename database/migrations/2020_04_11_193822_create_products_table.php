@@ -12,7 +12,7 @@ class CreateProductsTable extends Migration {
             $table->string('name');
             $table->longText('description');
             $table->decimal('price');
-            $table->decimal('offer')->default('0');
+            $table->decimal('offer')->nullable();
             $table->string('image');
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('seller_id')->unsigned()->nullable();

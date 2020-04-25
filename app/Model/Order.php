@@ -21,11 +21,11 @@ class Order extends Model
     {
         return $this->belongsToMany('App\Model\Product')->withPivot('qty', 'note', 'price');
     }
-//
-//    public function seller()
-//    {
-//        return $this->belongsTo('App\Model\Seller');
-//    }
+
+    public function seller()
+    {
+        return $this->belongsTo('App\Model\Seller');
+    }
 
     public function client()
     {
@@ -42,8 +42,4 @@ class Order extends Model
         return $this->hasMany('App\Model\Notification');
     }
 
-    public function sellers()
-    {
-        return $this->belongsToMany('App\Model\Seller');
-    }
 }

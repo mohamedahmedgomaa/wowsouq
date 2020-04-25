@@ -22,6 +22,16 @@
     <!-- main css -->
     <link rel="stylesheet" href="{{asset('wow_souq/css/style.css')}}"/>
     <link rel="stylesheet" href="{{asset('wow_souq/css/responsive.css')}}"/>
+    <link rel="stylesheet" href="{{asset('css/starStyle.css')}}">
+    <!-- Bootstrap -->
+    {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 
 <body> {{--style="background-color: #FAFAFA"--}}
@@ -41,7 +51,7 @@
                             </li>
                             <li>
                                 <a href="{{url('contact')}}">
-                                    Contact Us
+                                    {{trans('web.contact')}}
                                 </a>
                             </li>
                             @if (auth('clients')->user() == null)
@@ -112,48 +122,61 @@
                         <div class="col-lg-7 pr-0">
                             <ul class="nav navbar-nav center_nav pull-right">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="{{url('/')}}">Home</a>
+                                    <a class="nav-link" href="{{url('/')}}">{{trans('web.home')}}</a>
                                 </li>
-                                {{--                                <li class="nav-item submenu dropdown">--}}
-                                {{--                                    <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"--}}
-                                {{--                                       data-toggle="dropdown" role="button" aria-haspopup="true"--}}
-                                {{--                                       aria-expanded="false">{{trans('web.topProduct')}}</a>--}}
-                                {{--                                    <ul class="dropdown-menu">--}}
-
-                                {{--                                        @foreach($top_products as $top_product)--}}
-                                {{--                                            <li class="nav-item">--}}
-                                {{--                                                <a class="nav-link"--}}
-                                {{--                                                   href="{{url('product', $top_product->id)}}">{{$top_product->name}}</a>--}}
-                                {{--                                            </li>--}}
-                                {{--                                        @endforeach--}}
-                                {{--                                            <li class="nav-item">--}}
-                                {{--                                                <a class="nav-link"--}}
-                                {{--                                                   href="{{url('product/all')}}">{{trans('web.All Products')}}</a>--}}
-                                {{--                                            </li>--}}
-                                {{--                                    </ul>--}}
-                                {{--                                </li>--}}
-                                <li class="nav-item submenu dropdown">
-                                    <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"
-                                       data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">{{trans('web.categories')}}</a>
-                                    <ul class="dropdown-menu">
-                                        {{--                                        <li class="nav-item">--}}
-                                        {{--                                            <a class="nav-link"--}}
-                                        {{--                                               href="{{url('category',\App\Model\Category::first())}}">{{trans('web.Categories')}}</a>--}}
-                                        {{--                                        </li>--}}
-                                        @foreach($categories as $category)
-                                            <li class="nav-item">
-                                                @if (session('lang') === 'en')
+                                @if (auth('clients')->user() != null && auth('sellers')->user() == null)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{url('/client/my-order')}}">{{trans('web.myOrder')}}</a>
+                                    </li>
+                                @endif
+                                @if (auth('clients')->user() == null && auth('sellers')->user() != null)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{url('/seller/my-order')}}">{{trans('web.myOrder')}}</a>
+                                    </li>
+                                @endif
+                                @if (auth('clients')->user() != null && auth('sellers')->user() != null)
+                                    <li class="nav-item submenu dropdown">
+                                        <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"
+                                           data-toggle="dropdown" role="button" aria-haspopup="true"
+                                           aria-expanded="false">{{trans('web.my_order')}}</a>
+                                        <ul class="dropdown-menu">
+                                            @if (auth('clients')->user() != null)
+                                                <li class="nav-item">
                                                     <a class="nav-link"
-                                                       href="{{url('category',$category->id)}}">{{$category->name_en}}</a>
-                                                @else
+                                                       href="{{url('client/my-order')}}">{{trans('web.myOrderClient')}}</a>
+                                                </li>
+                                            @endif
+                                            @if (auth('sellers')->user() != null)
+                                                <li class="nav-item">
                                                     <a class="nav-link"
-                                                       href="{{url('category',$category->id)}}">{{$category->name_ar}}</a>
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                                       href="{{url('seller/my-order')}}">{{trans('web.myOrderSeller')}}</a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </li>
+                                @endif
+{{--                                <li class="nav-item submenu dropdown">--}}
+{{--                                    <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"--}}
+{{--                                       data-toggle="dropdown" role="button" aria-haspopup="true"--}}
+{{--                                       aria-expanded="false">{{trans('web.categories')}}</a>--}}
+{{--                                    <ul class="dropdown-menu">--}}
+{{--                                        --}}{{--                                        <li class="nav-item">--}}
+{{--                                        --}}{{--                                            <a class="nav-link"--}}
+{{--                                        --}}{{--                                               href="{{url('category',\App\Model\Category::first())}}">{{trans('web.Categories')}}</a>--}}
+{{--                                        --}}{{--                                        </li>--}}
+{{--                                        @foreach($categories as $category)--}}
+{{--                                            <li class="nav-item">--}}
+{{--                                                @if (session('lang') === 'en')--}}
+{{--                                                    <a class="nav-link"--}}
+{{--                                                       href="{{url('category',$category->id)}}">{{$category->name_en}}</a>--}}
+{{--                                                @else--}}
+{{--                                                    <a class="nav-link"--}}
+{{--                                                       href="{{url('category',$category->id)}}">{{$category->name_ar}}</a>--}}
+{{--                                                @endif--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
                                 <li class="nav-item submenu dropdown">
                                     <a href="{{asset('wow_souq')}}/#" class="nav-link dropdown-toggle"
                                        data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -165,20 +188,25 @@
                                         {{--                                        </li>--}}
                                         <li class="nav-item">
                                             <a class="nav-link"
-                                               href="{{url('products/all')}}">{{trans('web.All Products')}}</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link"
-                                               href="{{url('products/top')}}">{{trans('web.Top Products')}}</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link"
                                                href="{{url('category',\App\Model\Category::first())}}">{{trans('web.Categories')}}</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               href="{{url('products/all')}}">{{trans('web.ProductsAll')}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               href="{{url('products/offer')}}">{{trans('web.ProductsOffer')}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                               href="{{url('products/top')}}">{{trans('web.ProductsTop')}}</a>
+                                        </li>
+
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{url('contact')}}">Contact</a>
+                                    <a class="nav-link" href="{{url('contact')}}">{{trans('web.contact')}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -190,15 +218,13 @@
                                         <i class="ti-search" aria-hidden="true"></i>
                                     </a>
                                 </li>
-                                @if (auth('clients')->user() != null)
-                                    <li class="nav-item">
-                                        <a href="{{ route('client.shoppingCart') }}" class="icons">
-                                            <i class="ti-shopping-cart"></i>
-                                            <span
-                                                class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
-                                        </a>
-                                    </li>
-                                @endif
+                                <li class="nav-item">
+                                    <a href="{{ route('client.shoppingCart') }}" class="icons">
+                                        <i class="ti-shopping-cart"></i>
+                                        <span
+                                            class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}</span>
+                                    </a>
+                                </li>
                                 @if (auth('clients')->user() != null && auth('sellers')->user() != null)
                                     <li class="nav-item">
                                         <a class="icons" data-toggle="modal" data-target="#profile">
@@ -207,7 +233,7 @@
                                     </li>
                                 @elseif (auth('clients')->user() != null && auth('sellers')->user() == null)
                                     <li class="nav-item">
-                                        <a href="{{asset('wow_souq')}}/#" class="icons">
+                                        <a href="{{url('client/profile')}}" class="icons">
                                             <i class="ti-user" aria-hidden="true"></i>
                                         </a>
                                     </li>
@@ -433,7 +459,13 @@
         });
     });
 </script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{asset('wow_souq')}}/js/bootstrap.min.js"></script>
+<script src="{{ asset('wow_souq/js/like.js') }}"></script>
 
+@stack('js')
 </body>
 
 </html>

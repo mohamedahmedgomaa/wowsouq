@@ -84,4 +84,12 @@ class MainController extends Controller
         flash()->success(trans('admin.editMessageSuccess'));
         return redirect()->back();
     }
+
+    public function myOrder()
+    {
+        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
+        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
+
+        return view('wow_souq.sellers.order', compact('top_products', 'categories'));
+    }
 }

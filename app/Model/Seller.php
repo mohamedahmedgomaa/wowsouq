@@ -17,7 +17,7 @@ class Seller extends Authenticatable
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = array('name', 'email', 'image', 'password', 'phone', 'delivery', 'address', 'longitude', 'latitude', 'status', 'pin_code');
+    protected $fillable = array('name', 'email', 'image', 'password', 'phone', 'address', 'longitude', 'latitude', 'status', 'pin_code');
 
     public function products()
     {

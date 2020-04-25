@@ -25,7 +25,7 @@ class MainController extends Controller
     {
         $validator = validator()->make($request->all(), [
             'wallet' => 'required',
-        ],[
+        ], [
             'wallet.required' => trans('validation.walletIsRequired'),
         ]);
         if ($validator->fails()) {
@@ -139,7 +139,7 @@ class MainController extends Controller
         }
         $product = $request->user()->products()->find($request->product_id);
         if ($product) {
-            return responseJson(200,  trans('api.getSuccessData'), $product->load('category'));
+            return responseJson(200, trans('api.getSuccessData'), $product->load('category'));
         }
         return responseJson(400, trans('api.The operation failed'));
     }
@@ -160,7 +160,7 @@ class MainController extends Controller
             return responseJson(400, $validator->errors()->first(), $validator->errors());
         }
 
-        if ($request->offer <= $request->price) {
+        if ($request['offer'] <= $request['price'] && $request['offer'] != null) {
             return responseJson(400, trans('api.The offer price is smaller than or equal to the product price'));
         }
 
@@ -214,7 +214,7 @@ class MainController extends Controller
             }
             return responseJson(200, trans('api.editMessageSuccess'), ['product' => $product]);
         }
-        return responseJson(400,  trans('api.The operation failed'));
+        return responseJson(400, trans('api.The operation failed'));
     }
 
     public function removeProduct(Request $request)

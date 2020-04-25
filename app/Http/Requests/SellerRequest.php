@@ -29,7 +29,6 @@ class SellerRequest extends FormRequest
             'password' => 'required|confirmed|min:6',
             'phone' => 'required|numeric',
             'image' => 'required|' . v_image(),
-            'delivery' => 'required|numeric',
             'address' => 'nullable',
             'longitude' => 'nullable',
             'latitude' => 'nullable',

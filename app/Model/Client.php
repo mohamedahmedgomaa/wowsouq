@@ -24,6 +24,11 @@ class Client extends Authenticatable
         return $this->hasMany('App\Model\Comment');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany('App\Model\Review');
+    }
+
     public function likes()
     {
         return $this->hasMany('App\Model\Like');
@@ -33,6 +38,16 @@ class Client extends Authenticatable
     {
         return $this->hasMany('App\Model\Order');
     }
+
+//    public function products()
+//    {
+//        return $this->belongsToMany('App\Model\Product', 'likes');
+//    }
+    public function products()
+    {
+        return $this->hasMany('App\Model\Product');
+    }
+
 
     public function notifications()
     {

@@ -7,6 +7,7 @@ use App\Model\Category;
 use App\Model\Contact;
 use App\Model\Like;
 use App\Model\Product;
+use App\Model\Review;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +38,7 @@ class GeneralController extends Controller
         $input = $request->all();
         $record = Contact::create($input);
 
+        flash()->success(trans('admin.createMessageSuccess'));
         return redirect()->back();
     }
 
@@ -46,6 +48,9 @@ class GeneralController extends Controller
         $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
 
         $product = Product::findOrFail($id);
+//        foreach ($product->reviews as $review) {
+//            dd($review->avg('rate'));
+//        }
 
         return view('wow_souq/products/product', compact('top_products', 'categories', 'product'));
     }
@@ -82,25 +87,13 @@ class GeneralController extends Controller
 
         return view('wow_souq/products/product_top', compact('top_products', 'categories', 'productsTop'));
     }
-//    public function search(Request $request){
-//        if ($request->get('query')) {
-//            $query = $request->get('query');
-//            $data = DB::table('products')->where('name', 'LIKE', '%{$query}%')->get();
-//            $output = '<ul class="dropdown-menu" style="display: block;position: relative">';
-//            foreach ($data as $row) {
-//                $output .= '<li><a href="#">'. $row->name .'</a></li>';
-//            }
-//            $output .= '</ul>';
-//            echo $output;
-//        }
-//    }
 
     public function search(Request $request)
     {
 
         if ($request->ajax()) {
 
-            $data = Product::where('name', 'LIKE', '%' .  $request->country . '%')->take(10)
+            $data = Product::where('name', 'LIKE', '%' . $request->country . '%')->take(10)
                 ->get();
 
             $output = '';
@@ -124,4 +117,15 @@ class GeneralController extends Controller
             return $output;
         }
     }
+
+    public function productOffer()
+    {
+        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
+        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
+
+        $products = Product::orderBy('created_at', 'desc')->where('offer', '!=', null)->paginate(30);
+
+        return view('wow_souq/products/product_offer', compact('top_products', 'categories', 'products'));
+    }
+
 }

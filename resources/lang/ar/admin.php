@@ -52,6 +52,7 @@ return [
     'updated_record' => 'تم تحديث البيانات بنجاح',
     'deleted_record' => 'تم الحذف للبيانات بنجاح',
     'delete_this' => 'هل انت موافق على حذف  :name ؟ ',
+    'cancel_this' => 'هل انت موافق على الغاء هذا الطلب  :name ؟ ',
     'users' => 'الاعضاء',
     'user' => 'عضو',
     'company' => 'شركه',
