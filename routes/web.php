@@ -69,6 +69,15 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('payment-method', 'PaymentMethodController');
             Route::delete('payment-method/destroy/all', 'PaymentMethodController@multi_delete');
 
+            Route::resource('ad', 'AdController');
+            Route::delete('ad/destroy/all', 'AdController@multi_delete');
+
+            Route::resource('review', 'ReviewController');
+            Route::delete('review/destroy/all', 'ReviewController@multi_delete');
+
+            Route::resource('contact', 'ContactController');
+            Route::delete('contact/destroy/all', 'ContactController@multi_delete');
+
             Route::get('/settings', 'SettingController@index')->name('settings');
             Route::post('/settings/update', 'SettingController@update')->name('settings.update');
 

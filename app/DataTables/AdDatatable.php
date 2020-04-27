@@ -2,11 +2,14 @@
 
 namespace App\DataTables;
 
+use App\Model\Ad;
+use App\Model\Category;
+use App\Model\Product;
 use App\Model\Seller;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Services\DataTable;
 
-class SellerDatatable extends DataTable
+class AdDatatable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -18,19 +21,15 @@ class SellerDatatable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('checkbox', 'admin.sellers.btn.checkbox')
-            ->addColumn('edit', 'admin.sellers.btn.edit')
-            ->addColumn('delete', 'admin.sellers.btn.delete')
-            ->addColumn('active', 'admin.sellers.btn.active')
-            ->addColumn('wallets', 'admin.sellers.btn.wallet')
-            ->addColumn('image', 'admin.sellers.btn.image')
+            ->addColumn('checkbox', 'admin.ads.btn.checkbox')
+            ->addColumn('edit', 'admin.ads.btn.edit')
+            ->addColumn('delete', 'admin.ads.btn.delete')
+            ->addColumn('image', 'admin.ads.btn.image')
             ->rawColumns([
-                'checkbox',
+                'image',
                 'edit',
                 'delete',
-                'active',
-                'wallets',
-                'image',
+                'checkbox',
             ]);
     }
 
@@ -42,7 +41,8 @@ class SellerDatatable extends DataTable
      */
     public function query()
     {
-        return Seller::query();
+
+        return Ad::query()->with('product')->select('ads.*');
     }
 
     /**
@@ -60,7 +60,7 @@ class SellerDatatable extends DataTable
                 'lengthMenu' => [[10,25,50,100], [10,25,50, trans('admin.all_record')]],
                 'buttons'    =>[
                     [
-                        'text' => '<i class="fa fa-plus"></i> '. trans('admin.create_seller'),
+                        'text' => '<i class="fa fa-plus"></i> '. trans('admin.create_product'),
                         'className' => 'btn btn-info',"action"=>"function(){
                                     window.location.href = '". \URL::current() ."/create';
                                  }"
@@ -80,7 +80,7 @@ class SellerDatatable extends DataTable
                     ],
                 ],
                 'initComplete' => " function () {
-                            this.api().columns([2,3,4]).every(function() {
+                            this.api().columns([2,3,4,5]).every(function() {
                                     var column = this;
                                     var input = document.createElement(\"input\");
                                     $(input).appendTo($(column.footer()).empty())
@@ -114,17 +114,17 @@ class SellerDatatable extends DataTable
                 'data'  => 'id',
                 'title' => 'ID',
             ],[
-                'name'  => 'name',
-                'data'  => 'name',
-                'title' => trans('admin.name'),
+                'name'  => 'product.name',
+                'data'  => 'product.name',
+                'title' => trans('admin.products'),
             ],[
-                'name'  => 'email',
-                'data'  => 'email',
-                'title' => trans('admin.email'),
+                'name'  => 'time_start',
+                'data'  => 'time_start',
+                'title' => trans('admin.time_start'),
             ],[
-                'name'  => 'phone',
-                'data'  => 'phone',
-                'title' => trans('admin.phone'),
+                'name'  => 'time_finish',
+                'data'  => 'time_finish',
+                'title' => trans('admin.time_finish'),
             ],[
                 'name'          => 'image',
                 'data'          => 'image',
@@ -135,26 +135,9 @@ class SellerDatatable extends DataTable
                 'searchable'    => false,
 
             ],[
-                'name'  => 'wallet',
-                'data'  => 'wallet',
-                'title' => trans('admin.wallet'),
-            ],[
-                'name'  => 'wallets',
-                'data'  => 'wallets',
-                'title' => trans('admin.wallets'),
-                'exportable'    => false,
-                'printable'     => false,
-                'orderable'     => false,
-                'searchable'    => false,
-            ],[
-                'name'          => 'active',
-                'data'          => 'active',
-                'title'         => trans('admin.active'),
-                'exportable'    => false,
-                'printable'     => false,
-                'orderable'     => false,
-                'searchable'    => false,
-
+                'name'  => 'created_at',
+                'data'  => 'created_at',
+                'title' => trans('admin.created_at'),
             ],[
                 'name'          => 'edit',
                 'data'          => 'edit',
@@ -184,7 +167,7 @@ class SellerDatatable extends DataTable
      */
     protected function filename()
     {
-        return 'sellers_' . date('YmdHis');
+        return 'ads_' . date('YmdHis');
     }
 }
 

@@ -3,12 +3,12 @@
     {{--    @if(auth()->user()->hasRole('admin'))--}}
     <li class="treeview {{ active_menu('settings')[0] }}">
         <a href="#">
-            <i class="fa fa-list-ul"></i> <span>{{ trans('admin.dashboard') }}</span>
+            <i class="fa fa-dashboard"></i> <span>{{ trans('admin.dashboard') }}</span>
             <span class="pull-right-container">
             </span>
         </a>
         <ul class="treeview-menu" style="{{ active_menu('settings')[1] }}">
-            <li><a href="{{ url('admin') }}"><i class="fa fa-cog"></i>{{ trans('admin.dashboard') }}</a></li>
+            <li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i>{{ trans('admin.dashboard') }}</a></li>
             <li><a href="{{ url('admin/settings') }}"><i class="fa fa-cog"></i>{{ trans('admin.settings') }}</a></li>
         </ul>
     </li>
@@ -89,6 +89,20 @@
         </ul>
     </li>
 
+    <li class="treeview {{ active_menu('ad')[0] }}">
+        <a href="#">
+            <i class="fa fa-adn"></i> <span>{{ trans('admin.ads') }}</span>
+            <span class="pull-right-container">
+            </span>
+        </a>
+        <ul class="treeview-menu" style="{{ active_menu('ad')[1] }}">
+            <li class=""><a href="{{ url('admin/ad') }}"><i class="fa fa-adn"></i>{{ trans('admin.ads') }}</a>
+            </li>
+            <li class=""><a href="{{ url(route('ad.create')) }}"><i class="fa fa-plus"></i>{{ trans('admin.add') }}
+                </a></li>
+        </ul>
+    </li>
+
     <li class="treeview {{ active_menu('category')[0] }}">
         <a href="#">
             <i class="fa fa-filter"></i> <span>{{ trans('admin.categories') }}</span>
@@ -96,7 +110,7 @@
             </span>
         </a>
         <ul class="treeview-menu" style="{{ active_menu('category')[1] }}">
-            <li class=""><a href="{{ url('admin/category') }}"><i class="fa fa-flag"></i>{{ trans('admin.categories') }}</a>
+            <li class=""><a href="{{ url('admin/category') }}"><i class="fa fa-filter"></i>{{ trans('admin.categories') }}</a>
             </li>
             <li class=""><a href="{{ url(route('category.create')) }}"><i class="fa fa-plus"></i>{{ trans('admin.add') }}
                 </a></li>
@@ -153,6 +167,16 @@
             <li class=""><a href="{{ url('admin/comment') }}"><i class="fa fa-flag"></i>{{ trans('admin.comments') }}</a>
             </li>
         </ul>
+    </li>
+
+    <li>
+        <a href="{{url('admin/review')}}"><i class="fa fa-star text-yellow"></i>
+            <span>{{trans('admin.review')}}</span></a>
+    </li>
+
+    <li>
+        <a href="{{url('admin/contact')}}"><i class="fa fa-phone text-green"></i>
+            <span>{{trans('admin.contact')}}</span></a>
     </li>
 
     <li>

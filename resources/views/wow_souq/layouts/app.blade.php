@@ -213,8 +213,8 @@
 
                         <div class="col-lg-5 pr-0">
                             <ul class="nav navbar-nav navbar-right right_nav pull-right">
-                                <li class="nav-item">
-                                    <a data-toggle="modal" data-target="#search" class="icons">
+                                <li class="nav-item ">
+                                    <a data-toggle="modal" data-target="#search" href="" class="icons">
                                         <i class="ti-search" aria-hidden="true"></i>
                                     </a>
                                 </li>
@@ -328,10 +328,9 @@
             <div class="col-lg-2 col-md-6 single-footer-widget">
                 <h4>Top Products</h4>
                 <ul>
-                    <li><a href="#">Managed Website</a></li>
-                    <li><a href="#">Manage Reputation</a></li>
-                    <li><a href="#">Power Tools</a></li>
-                    <li><a href="#">Marketing Service</a></li>
+                    @foreach($top_products as $product)
+                    <li><a href="{{url('product',$product->id)}}">{{$product->name}}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6 single-footer-widget">
@@ -362,23 +361,23 @@
                 </ul>
             </div>
             <div class="col-lg-4 col-md-6 single-footer-widget">
-                <h4>Newsletter</h4>
-                <p>You can trust us. we only send promo offers,</p>
-                <div class="form-wrap" id="mc_embed_signup">
-                    <form target="_blank"
-                          action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                          method="get" class="form-inline">
-                        <input class="form-control" name="EMAIL" placeholder="Your Email Address"
-                               onfocus="this.placeholder = ''"
-                               onblur="this.placeholder = 'Your Email Address '" required="" type="email">
-                        <button class="click-btn btn btn-default">Subscribe</button>
-                        <div style="position: absolute; left: -5000px;">
-                            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                        </div>
+{{--                <h4>Newsletter</h4>--}}
+{{--                <p>You can trust us. we only send promo offers,</p>--}}
+{{--                <div class="form-wrap" id="mc_embed_signup">--}}
+{{--                    <form target="_blank"--}}
+{{--                          action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"--}}
+{{--                          method="get" class="form-inline">--}}
+{{--                        <input class="form-control" name="EMAIL" placeholder="Your Email Address"--}}
+{{--                               onfocus="this.placeholder = ''"--}}
+{{--                               onblur="this.placeholder = 'Your Email Address '" required="" type="email">--}}
+{{--                        <button class="click-btn btn btn-default">Subscribe</button>--}}
+{{--                        <div style="position: absolute; left: -5000px;">--}}
+{{--                            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">--}}
+{{--                        </div>--}}
 
-                        <div class="info"></div>
-                    </form>
-                </div>
+{{--                        <div class="info"></div>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
             </div>
         </div>
         <div class="footer-bottom row align-items-center">

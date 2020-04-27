@@ -60,11 +60,6 @@
 </div>
 
 <div class="form-group">
-    <label for="delivery">{{trans('admin.delivery')}}</label>
-    {!! Form::number('delivery', null , ['class' => 'form-control']) !!}
-</div>
-
-<div class="form-group">
     {!! Form::label('address', trans('admin.address')) !!}
     {!! Form::text('address', old('address'), ['class'=>'form-control address']) !!}
 </div>

@@ -58,31 +58,31 @@
                                     $i = 0;
                                 @endphp
                                 @foreach($product->files as $file)
-                                @php
-
-                                    $i = 0 + 1;
-                                @endphp
-                                <li data-target="#carouselExampleIndicators" data-slide-to="{{$i}}">
-                                    <img src="{{Storage::url($file->file)}}"
-                                         alt="" style="width: 60px;height: 60px"/>
-                                </li>
+                                    @php
+                                        $i = $i + 1;
+                                    @endphp
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{$i}}">
+                                        <img src="{{Storage::url($file->file)}}"
+                                             alt="" style="width: 60px;height: 60px"/>
+                                    </li>
                                 @endforeach
-{{--                                <li data-target="#carouselExampleIndicators" data-slide-to="2">--}}
-{{--                                    <img src="{{asset('wow_souq')}}/img/product/single-product/s-product-s-4.jpg"--}}
-{{--                                         alt=""/>--}}
-{{--                                </li>--}}
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img
-                                        class="d-block w-100" style="height: 584px;width: 540px;"
-                                        src="{{Storage::url($product->image)}}"
-                                        alt="First slide"/>
+                                    <a href="#">
+                                        <img
+                                            class="d-block w-100" style="height: 584px;width: 540px;"
+                                            src="{{Storage::url($product->image)}}"
+                                            alt="First slide"/>
+                                    </a>
                                 </div>
                                 @foreach($product->files as $file)
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="{{Storage::url($file->file)}}" alt="{{$file->id}}"  style="height: 584px;width: 540px;"/>
-                                </div>
+                                    <div class="carousel-item">
+                                        <a href="#">
+                                            <img class="d-block w-100" src="{{Storage::url($file->file)}}"
+                                                 alt="{{$file->id}}" style="height: 584px;width: 540px;"/>
+                                        </a>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                     aria-labelledby="home-tab"
                 >
                     <p>
-                     {{$product->description}}
+                        {{$product->description}}
                     </p>
                 </div>
                 <div
@@ -355,7 +355,8 @@
                                         <div class="media">
                                             <div class="d-flex">
                                                 <img
-                                                    src="{{Storage::url($review->client->image)}}" style="width: 70px;border-radius: 50%;height: 71px;"
+                                                    src="{{Storage::url($review->client->image)}}"
+                                                    style="width: 70px;border-radius: 50%;height: 71px;"
                                                     alt=""
                                                 />
                                             </div>
@@ -377,18 +378,24 @@
                             <div class="review_box">
                                 <h4>Add a Review</h4>
 
-                                <form class="row contact_form" action="{{route('wowsouq.client.reviews', $product->id)}}" method="POST">
+                                <form class="row contact_form"
+                                      action="{{route('wowsouq.client.reviews', $product->id)}}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <p>Your Rating:</p>
 
                                             <div class="rating">
-                                                <input type="radio" name="rate"  value="5" id="rate1"><label for="rate1"></label>
-                                                <input type="radio" name="rate"  value="4" id="rate2"><label for="rate2"></label>
-                                                <input type="radio" name="rate"  value="3" id="rate3"><label for="rate3"></label>
-                                                <input type="radio" name="rate"  value="2" id="rate4"><label for="rate4"></label>
-                                                <input type="radio" name="rate"  value="1" id="rate5"><label for="rate5"></label>
+                                                <input type="radio" name="rate" value="5" id="rate1"><label
+                                                    for="rate1"></label>
+                                                <input type="radio" name="rate" value="4" id="rate2"><label
+                                                    for="rate2"></label>
+                                                <input type="radio" name="rate" value="3" id="rate3"><label
+                                                    for="rate3"></label>
+                                                <input type="radio" name="rate" value="2" id="rate4"><label
+                                                    for="rate4"></label>
+                                                <input type="radio" name="rate" value="1" id="rate5"><label
+                                                    for="rate5"></label>
                                             </div>
 
                                         </div>
@@ -416,12 +423,12 @@
 @endsection
 
 @push('js')
-{{--    <script>--}}
+    {{--    <script>--}}
 
-{{--        var token = '{{ Session::token() }}';--}}
-{{--        var urlLike = '{{ route('like') }}';--}}
-{{--    </script>--}}
-<script>
-    $("#input-3").rating();
-</script>
+    {{--        var token = '{{ Session::token() }}';--}}
+    {{--        var urlLike = '{{ route('like') }}';--}}
+    {{--    </script>--}}
+    <script>
+        $("#input-3").rating();
+    </script>
 @endpush

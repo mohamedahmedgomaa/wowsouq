@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WowSouq;
 
 use App\Http\Requests\ContactRequest;
+use App\Model\Ad;
 use App\Model\Category;
 use App\Model\Contact;
 use App\Model\Like;
@@ -18,10 +19,20 @@ class GeneralController extends Controller
 
     public function index()
     {
-        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(5)->get();
-        $top_product = Product::withCount(['orders'])->orderBy('orders_count', 'desc')->limit(4)->get();
-        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(10)->get();
-        return view('wow_souq/index', compact('top_products', 'top_product', 'categories'));
+        $top_products = Product::withCount(['likes', 'comments'])->orderBy('likes_count', 'desc')->orderBy('comments_count', 'desc')->limit(4)->get();
+        $top_product = Product::withCount(['orders'])->orderBy('orders_count', 'desc')->limit(8)->get();
+        $categories = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(5)->get();
+        $ad_ad = Ad::first();
+        $ad_s = Ad::where('id', '!=', $ad_ad->id)->get();
+        $firstNewProductIndex = Product::orderBy('created_at', 'desc')->first();
+        $newProductIndex = Product::where('id', '!=', $firstNewProductIndex->id)->orderBy('created_at', 'desc')->limit(4)->get();
+        $oldProductIndex = Product::orderBy('created_at', 'asc')->limit(16)->get();
+
+        $categoriesAllIndex = Category::withCount(['products'])->orderBy('products_count', 'desc')->limit(3)->get();
+
+
+        return view('wow_souq/index', compact('top_products', 'top_product', 'categories', 'ad_ad', 'ad_s'
+                , 'newProductIndex', 'firstNewProductIndex', 'oldProductIndex', 'categoriesAllIndex'));
     }
 
     public function contact()

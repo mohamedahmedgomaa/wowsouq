@@ -73,7 +73,7 @@ class Product extends Model
 
     public function ads()
     {
-        return $this->hasMany('App\Model\Ads');
+        return $this->hasMany('App\Model\Ad');
     }
 
     public function reviews()

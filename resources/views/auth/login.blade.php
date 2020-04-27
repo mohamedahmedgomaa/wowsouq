@@ -17,70 +17,50 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/skins/_all-skins.min.css') }}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="{{ asset('css/loginStyle.css') }}">
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-logo">
-        <div class="text-center">
-            <img src="{{Storage::url(settings()->image)}}" style="width: 150px">
+<body
+    style="background-image: url('{{Storage::url(settings()->image_login_admin)}}'); margin-bottom: 0;background-size: cover">
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+<div class="box">
+    <h2>Login</h2>
+    <form method="post">
+        {!! csrf_field() !!}
+        <div class="inputBox">
+            <label style="color: #ffffff">Username</label>
+            <input type="text" name="email" required="required">
         </div>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start</p>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form method="post">
-            {!! csrf_field() !!}
-            <div class="form-group has-feedback">
-                <input type="email" name="email" class="form-control" placeholder="{{trans('admin.email')}}">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="{{trans('admin.password')}}">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="row">
-                <div class="col-xs-7 col-xs-offset-1">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox" name="rememberme" value="1"> {{trans('admin.remember_me')}}
-                        </label>
-                    </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">{{trans('admin.Sign In')}}</button>
-                </div>
-                <!-- /.col -->
-            </div>
-        </form>
-
-        <!-- /.social-auth-links -->
-
-        <a href="{{ url('admin/password/reset') }}" class="col-xs-offset-1">{{trans('admin.I forgot my password')}}</a><br>
-
-    </div>
-    <!-- /.login-box-body -->
+        <div class="inputBox">
+            <label style="color: #ffffff">Password</label>
+            <input type="password" name="password" required="required">
+        </div>
+        <div class="checkbox icheck" style="color: #ffffff;margin-left: 20px;margin-bottom: 20px">
+            <label>
+                <input type="checkbox" name="rememberme" value="1"> {{trans('admin.remember_me')}}
+            </label>
+        </div>
+        <input type="submit" name="" value="submit">
+        <a href="{{ url('admin/password/reset') }}"
+           class="col-xs-offset-1">{{trans('admin.I forgot my password')}}</a><br>
+    </form>
 </div>
-<!-- /.login-box -->
+
 
 <!-- jQuery 3 -->
 <script src="{{ asset('') }}adminlte/plugins/jquery/dist/jquery.min.js"></script>

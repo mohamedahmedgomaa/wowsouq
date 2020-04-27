@@ -21,6 +21,29 @@
     @endif
 </div>
 
+
+<div class="banner_content row" style="margin-top: 10px">
+    <div class="col-lg-10">
+        <div class="mt-10">
+            <label for="files">{{trans('web.files')}}</label>
+            <input type="file" class="form-control-file"
+                   name="files[]" multiple="multiple">
+            @foreach($model->files as $file)
+                <label>
+                    <img src="{{Storage::url($file->file)}}" alt="000000"
+                         class="img-thumbnail"
+                         style="width: 50px;height: 50px;margin: 10px 0 20px 10px">
+                    <input type="checkbox" name="file_id[]" value="{{$file->id}}">
+                </label>
+            @endforeach
+            <div class="clearfix"></div>
+            @if ($model->files->count() != 0)
+                {!! Form::submit(trans('web.delete photo'), ['class' => 'btn btn-danger', 'name' => 'delete_photo']) !!}
+            @endif
+        </div>
+    </div>
+</div>
+
 <div class="form-group">
     <label for="price">{{trans('admin.price')}}</label>
     {!! Form::text('price', null , ['class' => 'form-control']) !!}

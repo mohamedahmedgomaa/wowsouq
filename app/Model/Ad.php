@@ -4,12 +4,12 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ads extends Model
+class Ad extends Model
 {
     //
     protected $table = 'ads';
     public $timestamps = true;
-    protected $fillable = array('review', 'rate', 'client_id');
+    protected $fillable = array('image', 'time_start', 'time_finish', 'product_id');
 
     public function product()
     {

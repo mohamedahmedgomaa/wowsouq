@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\Seller;
 
+use App\Model\File;
 use App\Model\Product;
 use App\Model\Seller;
 use App\Model\Token;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class MainController extends Controller
 {
@@ -151,9 +153,11 @@ class MainController extends Controller
             'name' => 'required',
             'description' => 'required',
             'image' => 'required|' . v_image(),
+            'files.*' => 'required|' . v_image(),
+            'files' => 'required|array|max:4',
             'price' => 'required|numeric',
             'offer' => 'nullable|numeric',
-            'category_id' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'number_product' => 'required',
         ]);
         if ($validator->fails()) {
@@ -180,6 +184,21 @@ class MainController extends Controller
         $product->seller_id = $request->user()->id;
         $product->save();
 
+
+        foreach ($request->file('files') as $file) {
+            $uploadFile = $file->store('products/' . $product->id);
+            File::create([
+                'seller_id' => auth('sellers')->user()->id,
+                'product_id' => $product->id,
+                'path' => 'products/' . $product->id,
+                'file' => $uploadFile,
+                'file_name' => $file->getClientOriginalName(),
+                'size' => Storage::size($uploadFile),
+            ]);
+        }
+
+
+
         return responseJson(1, trans('api.createMessageSuccess'), $product);
     }
 
@@ -190,9 +209,11 @@ class MainController extends Controller
             'name' => 'required',
             'description' => 'required',
             'image' => v_image(),
+            'files.*' => v_image(),
+            'files' => 'array|max:4',
             'price' => 'required|numeric',
             'offer' => 'nullable|numeric',
-            'category_id' => 'required',
+            'category_id' => 'required|exists:categories,id',
             'number_product' => 'required',
         ]);
         if ($validator->fails()) {
@@ -212,6 +233,23 @@ class MainController extends Controller
                 $product->image = $product['image'];
                 $product->save();
             }
+
+            if (request()->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+
+                    $uploadFile = $file->store('products/' . $product->id);
+                    File::create([
+                        'seller_id' => auth('sellers')->user()->id,
+                        'product_id' => $product->id,
+                        'path' => 'products/' . $product->id,
+                        'file' => $uploadFile,
+                        'file_name' => $file->getClientOriginalName(),
+                        'size' => Storage::size($uploadFile),
+                    ]);
+                }
+            }
+
+
             return responseJson(200, trans('api.editMessageSuccess'), ['product' => $product]);
         }
         return responseJson(400, trans('api.The operation failed'));
